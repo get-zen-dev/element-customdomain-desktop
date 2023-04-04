@@ -1,0 +1,11 @@
+name: Simple Job
+
+on:
+  workflow_dispatch:
+
+jobs:
+  write:
+    runs-on: ubuntu-latest
+    steps:
+      - name: First Step
+        run: echo "success"
