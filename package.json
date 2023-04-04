@@ -2,7 +2,7 @@
     "scripts": {
         "load": "yarn run clone-desktop && cd element-desktop && yarn && yarn run fetch --noverify --cfgdir \"\"",
         "clone-desktop": "git clone https://github.com/vector-im/element-desktop.git",
-        "create-custom-config": "mkdir element-desktop/myconfig && yarn run run-c && cd element-desktop && yarn run fetch --cfgdir myconfig",
+        "create-custom-config": "mkdir \"element-desktop/myconfig\" && yarn run run-c && cd element-desktop && yarn run fetch --cfgdir myconfig",
         "run-c": "gcc main.c -o set_server.exe && ./set_server.exe element-desktop/element.io/release/config.json element-desktop/myconfig/config.json mtrx.intra.getzen.dev",
         "start": "cd element-desktop && yarn add electron && yarn start",
         "start-custom": "yarn run load && yarn run create-custom-config && yarn run start"

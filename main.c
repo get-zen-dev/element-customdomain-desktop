@@ -14,6 +14,7 @@ int main(int argc, char * argv[])
     char* line = (char*)malloc(LINE_LENGTH_LIMIT * sizeof(char));
     char* replace = (char*)"    \"default_server_name\": \0";
     char* replace_by = (char*)malloc(strlen(replace) + strlen(homeserver) + strlen("\"\",\n\0") + 1);
+    memset(replace_by, 0, strlen(replace) + strlen(homeserver) + strlen("\"\",\n\0") + 1);
     strcat(replace_by, replace);
     strcat(replace_by, "\"");
     strcat(replace_by, homeserver);
