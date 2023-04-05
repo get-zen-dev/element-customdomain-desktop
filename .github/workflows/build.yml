@@ -1,4 +1,4 @@
-name: Build And Release
+name: Build And Print Dist
 
 on:
   workflow_dispatch:
@@ -17,30 +17,11 @@ jobs:
 
       - name: Build
         run: yarn build-custom
+
+      - name: Ls Dist
+        run: ls element-desktop/dist > ls-result.txt
       
-      - name: Create Draft Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Generate Artifacts
+        uses: actions/upload-artifact@v3
         with:
-          tag_name: test1
-          release_name: test2
-          draft: true
-          prerelease: false
-
-      - uses: actions/upload-release-asset@v1.0.1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./element-desktop/dist
-          asset_name: test3
-          asset_content_type: application/dir
-
-      - name: Publish Release
-        uses: eregon/publish-release@v1.0.3
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          release_id: ${{ steps.create_release.outputs.id }}
+          name: ls-result.txt
