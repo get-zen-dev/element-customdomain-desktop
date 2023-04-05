@@ -1,10 +1,10 @@
-name: Simple Job On Different OS
+name: Build And Release
 
 on:
   workflow_dispatch:
 
 jobs:
-  test:
+  test_job:
     strategy:
       matrix:
         os: [ubuntu-latest]
@@ -15,8 +15,32 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: First Step
-        run: echo "success"
-
       - name: Build
         run: yarn build-custom
+      
+      - name: Create Draft Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: test1
+          release_name: test2
+          draft: true
+          prerelease: false
+
+      - uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./element-desktop/dist
+          asset_name: test3
+          asset_content_type: application/dir
+
+      - name: Publish Release
+        uses: eregon/publish-release@v1.0.3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          release_id: ${{ steps.create_release.outputs.id }}
