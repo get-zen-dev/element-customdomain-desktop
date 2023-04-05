@@ -7,7 +7,7 @@ jobs:
   test_job:
     strategy:
       matrix:
-        os: [ubuntu-latest]
+        os: [ubuntu-latest, windows-latest]
     
     runs-on: ${{ matrix.os }}
     timeout-minutes: 10
@@ -24,5 +24,5 @@ jobs:
       - name: Generate Artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: ls-result.txt
+          name: ls-result-${{ matrix.os }}.txt
           path: ls-result.txt
