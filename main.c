@@ -25,7 +25,7 @@ int main(int argc, char * argv[])
     {
         fgets(line, LINE_LENGTH_LIMIT, fin);
         if (feof(fin)) break;
-        if (memcmp(line, replace, sizeof replace) == 0)
+        if (memcmp(line, replace, strlen(replace)) == 0)
         {
             fputs(replace_by, fout);
         }
