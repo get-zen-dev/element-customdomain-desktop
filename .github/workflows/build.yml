@@ -2,6 +2,10 @@ name: Simple Job On Different OS
 
 on:
   workflow_dispatch:
+    secrets:
+      tok:
+        description: 'Token'
+        required: true
 
 jobs:
   write:
@@ -18,5 +22,6 @@ jobs:
     - name: First Step
       run: echo "success"
 
-    - name: Build
-      run: yarn build-custom
+    - run: ls
+
+    

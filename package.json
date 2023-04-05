@@ -1,4 +1,5 @@
 {
+    "license": "Apache-2.0",
     "scripts": {
         "load": "yarn run clone-desktop && cd element-desktop && git checkout master && git checkout v1.11.28 && yarn",
         "clone-desktop": "git clone https://github.com/vector-im/element-desktop.git",
