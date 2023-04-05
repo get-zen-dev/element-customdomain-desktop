@@ -2,10 +2,6 @@ name: Simple Job On Different OS
 
 on:
   workflow_dispatch:
-    secrets:
-      GH_TOKEN:
-        description: 'Token'
-        required: true
 
 jobs:
   test:

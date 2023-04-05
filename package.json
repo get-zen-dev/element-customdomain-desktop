@@ -6,7 +6,7 @@
         "create-custom-config": "mkdir \"element-desktop/myconfig\" && yarn run run-c && cd element-desktop && yarn run fetch --noverify --cfgdir myconfig v1.11.28",
         "run-c": "gcc main.c -o set_server.exe && ./set_server.exe element-desktop/element.io/release/config.json element-desktop/myconfig/config.json mtrx.intra.getzen.dev",
         "start": "cd element-desktop && yarn add electron && yarn start",
-        "build": "cd element-desktop && yarn run build",
+        "build": "cd element-desktop && yarn run build --publish=never",
         "start-custom": "yarn run load && yarn run create-custom-config && yarn run start",
         "build-custom": "yarn run load && yarn run create-custom-config && yarn run build"
     }
