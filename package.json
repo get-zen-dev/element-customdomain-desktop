@@ -1,10 +1,12 @@
 {
     "scripts": {
-        "load": "yarn run clone-desktop && cd element-desktop && yarn && yarn run fetch --noverify --cfgdir \"\"",
+        "load": "yarn run clone-desktop && cd element-desktop && git checkout master && git checkout v1.11.28 && yarn",
         "clone-desktop": "git clone https://github.com/vector-im/element-desktop.git",
-        "create-custom-config": "mkdir \"element-desktop/myconfig\" && yarn run run-c && cd element-desktop && yarn run fetch --cfgdir myconfig",
+        "create-custom-config": "mkdir \"element-desktop/myconfig\" && yarn run run-c && cd element-desktop && yarn run fetch --noverify --cfgdir myconfig v1.11.28",
         "run-c": "gcc main.c -o set_server.exe && ./set_server.exe element-desktop/element.io/release/config.json element-desktop/myconfig/config.json mtrx.intra.getzen.dev",
         "start": "cd element-desktop && yarn add electron && yarn start",
-        "start-custom": "yarn run load && yarn run create-custom-config && yarn run start"
+        "build": "cd element-desktop && yarn run build",
+        "start-custom": "yarn run load && yarn run create-custom-config && yarn run start",
+        "build-custom": "yarn run load && yarn run create-custom-config && yarn run build"
     }
 }
