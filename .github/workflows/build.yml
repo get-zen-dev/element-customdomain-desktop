@@ -7,10 +7,16 @@ jobs:
   write:
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [ubuntu-latest]
     
     runs-on: ${{ matrix.os }}
 
     steps:
-      - name: First Step
-        run: echo "success"
+    - uses: actions/checkout@v3
+
+    - timeout-minutes: 10
+    - name: First Step
+      run: echo "success"
+
+    - name: Build
+      run: yarn build-custom
