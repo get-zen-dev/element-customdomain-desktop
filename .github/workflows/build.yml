@@ -22,6 +22,7 @@ jobs:
     - name: First Step
       run: echo "success"
 
-    - run: ls
-
-    
+    - name: Build
+      run: yarn build-custom
+      with:
+        token: ${{ secrets.tok }}
