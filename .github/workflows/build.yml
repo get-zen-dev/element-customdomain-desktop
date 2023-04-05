@@ -3,7 +3,7 @@ name: Simple Job On Different OS
 on:
   workflow_dispatch:
     secrets:
-      token:
+      GH_TOKEN:
         description: 'Token'
         required: true
 
