@@ -1,16 +1,25 @@
-name: Simple Job On Different OS
+name: Build
 
 on:
   workflow_dispatch:
 
 jobs:
-  write:
+  test_job:
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [ubuntu-latest]
     
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
 
     steps:
-      - name: First Step
-        run: echo "success"
+      - uses: actions/checkout@v3
+
+      - name: Build
+        run: yarn build-custom
+      
+      - name: Generate Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: element-getzen-${{ matrix.os }}-v1.11.27
+          path: element-desktop/dist/element-desktop-1.11.27.tar.gz
