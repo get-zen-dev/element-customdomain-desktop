@@ -1,4 +1,4 @@
-name: Build And Print Dist
+name: Build
 
 on:
   workflow_dispatch:
@@ -7,7 +7,7 @@ jobs:
   test_job:
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [ubuntu-latest]
     
     runs-on: ${{ matrix.os }}
     timeout-minutes: 10
@@ -17,12 +17,9 @@ jobs:
 
       - name: Build
         run: yarn build-custom
-
-      - name: Ls Dist
-        run: ls -r element-desktop/dist > ls-result.txt
       
       - name: Generate Artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: ls-result-${{ matrix.os }}.txt
-          path: ls-result.txt
+          name: element-getzen-${{ matrix.os }}-v1.11.27
+          path: element-desktop/dist/element-desktop-1.11.27.tar.gz
