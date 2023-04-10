@@ -15,12 +15,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Build
+      - name: Load Element & Create Config
         run: |
           yarn load v1.11.28
-          yarn mv-to-root
-          yarn
           mkdir myconfig
           yarn create-config mtrx.intra.getzen.dev
-          yarn set-confing v1.11.28
+          yarn mv-to-root
 
