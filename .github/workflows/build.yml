@@ -16,10 +16,11 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Build
-        run: yarn build-custom
-      
-      - name: Generate Artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: element-getzen-${{ matrix.os }}-v1.11.27
-          path: element-desktop/dist/element-desktop-1.11.27.tar.gz
+        run: |
+          yarn load v1.11.28
+          yarn mv-to-root
+          yarn
+          mkdir myconfig
+          yarn create-config mtrx.intra.getzen.dev
+          yarn set-confing v1.11.28
+
