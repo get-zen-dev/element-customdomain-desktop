@@ -1,4 +1,5 @@
 # Original source: https://github.com/vector-im/element-desktop/blob/master/.github/workflows/build_prepare.yaml
+# Changes: Added cloning element & creating config
 
 # This action helps perform common actions before the build_* actions are started in parallel.
 on:
@@ -52,6 +53,13 @@ jobs:
             win32-x86-version: ${{ steps.versions.outputs.win_x86 }}
         steps:
             - uses: actions/checkout@v3
+
+            - name: Load Element & Create Config
+                run: |
+                yarn load v1.11.28
+                mkdir myconfig
+                yarn create-config mtrx.intra.getzen.dev
+                yarn mv-to-root
 
             - uses: actions/setup-node@v3
               with:
