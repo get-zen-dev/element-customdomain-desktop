@@ -1,9 +1,8 @@
 {
     "scripts": {
-        "load": "yarn run clone-desktop && cd element-desktop && git checkout master && git checkout",
         "clone-desktop": "git clone https://github.com/vector-im/element-desktop.git",
-        "mv-to-root": "mv element-desktop/* ./",
+        "load": "yarn run clone-desktop && cd element-desktop && git checkout master && git checkout",
         "create-config": "gcc main.c -o set_server.exe && ./set_server.exe element.io/release/config.json myconfig/config.json",
-        "set-config": "yarn run fetch --noverify --cfgdir myconfig"
+        "mv-to-root": "mv element-desktop/* ./"
     }
 }
