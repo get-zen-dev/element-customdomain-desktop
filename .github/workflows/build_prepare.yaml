@@ -55,7 +55,7 @@ jobs:
             - uses: actions/checkout@v3
 
             - name: Load Element & Create Config
-                run: |
+              run: |
                 yarn load v1.11.28
                 mkdir myconfig
                 yarn create-config mtrx.intra.getzen.dev
