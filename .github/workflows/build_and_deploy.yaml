@@ -1,0 +1,69 @@
+# Original source: https://github.com/vector-im/element-desktop/blob/master/.github/workflows/build_and_deploy.yaml
+# Changes:
+# - Only job "linux" is called.
+
+name: Build and Deploy
+on:
+    # Nightly build
+    schedule:
+        - cron: "0 9 * * *"
+    # Manual nightly & release
+    workflow_dispatch:
+        inputs:
+            mode:
+                description: What type of build to trigger. Release builds MUST be ran from the `master` branch.
+                required: true
+                default: nightly
+                type: choice
+                options:
+                    - nightly
+                    - release
+            macos:
+                description: Build macOS
+                required: true
+                type: boolean
+                default: true
+            windows_32bit:
+                description: Build Windows 32-bit
+                required: true
+                type: boolean
+                default: true
+            windows_64bit:
+                description: Build Windows 64-bit
+                required: true
+                type: boolean
+                default: true
+            linux:
+                description: Build Linux
+                required: true
+                type: boolean
+                default: true
+            deploy:
+                description: Deploy artifacts
+                required: true
+                type: boolean
+                default: true
+concurrency: ${{ github.workflow }}
+env:
+    R2_BUCKET: "packages-element-io"
+jobs:
+    prepare:
+        uses: ./.github/workflows/build_prepare.yaml
+        with:
+            config: element.io/${{ inputs.mode || 'nightly' }}
+            version: ${{ inputs.mode == 'release' && '' || 'develop' }}
+            nightly: ${{ inputs.mode != 'release' }}
+        secrets:
+            CF_R2_ACCESS_KEY_ID: ${{ secrets.CF_R2_ACCESS_KEY_ID }}
+            CF_R2_TOKEN: ${{ secrets.CF_R2_TOKEN }}
+            CF_R2_S3_API: ${{ secrets.CF_R2_S3_API }}
+
+    linux:
+        if: github.event_name != 'workflow_dispatch' || inputs.linux
+        needs: prepare
+        name: Linux
+        uses: ./.github/workflows/build_linux.yaml
+        with:
+            config: element.io/${{ inputs.mode || 'nightly' }}
+            sqlcipher: system
+            version: ${{ needs.prepare.outputs.linux-version }}
