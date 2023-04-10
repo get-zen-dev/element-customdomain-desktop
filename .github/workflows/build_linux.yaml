@@ -1,5 +1,7 @@
 # Original source: https://github.com/vector-im/element-desktop/blob/master/.github/workflows/build_linux.yaml
-# Changes: Add myconfig, clone element & create config
+# Changes: 
+# - Add myconfig, clone element & create config.
+# - Slightly edited inputs.
 
 # This workflow relies on actions/cache to store the hak dependency artifacts as they take a long time to build
 # Due to this extra care must be taken to only ever run all build_* scripts against the same branch to ensure
@@ -11,14 +13,18 @@ on:
                 type: string
                 required: true
                 description: "The config directory to use"
-            version:
-                type: string
-                required: false
-                description: "Version string to override the one in package.json, used for non-release builds"
             sqlcipher:
                 type: string
                 required: true
                 description: "How to link sqlcipher, one of 'system' | 'static'"
+            element-version:
+                description: Version of Element to build
+                required: true
+                type: string
+            homeserver:
+                description: Homeserver to use
+                required: true
+                type: string
 jobs:
     build:
         runs-on: ubuntu-latest
@@ -32,9 +38,9 @@ jobs:
 
             - name: Load Element & Create Config
               run: |
-                yarn load v1.11.28
+                yarn load ${{ inputs.element-version }}
                 mkdir myconfig
-                yarn create-config mtrx.intra.getzen.dev
+                yarn create-config ${{ inputs.homeserver }}
                 yarn mv-to-root
 
             - uses: actions/download-artifact@v3
@@ -69,11 +75,11 @@ jobs:
               env:
                   SQLCIPHER_STATIC: ${{ inputs.sqlcipher == 'static' && '1' || '' }}
 
-            - name: "[Nightly] Resolve version"
-              id: nightly
-              if: inputs.version != ''
-              run: |
-                  echo "config-args=--nightly '${{ inputs.version }}'" >> $GITHUB_OUTPUT
+            #- name: "[Nightly] Resolve version"
+            #  id: nightly
+            #  if: inputs.version != ''
+            #  run: |
+            #      echo "config-args=--nightly '${{ inputs.version }}'" >> $GITHUB_OUTPUT
 
             - name: Generate debian files and arguments
               id: debian
@@ -87,7 +93,7 @@ jobs:
                   echo "Version: $VERSION" >> debcontrol
               env:
                   DIR: ${{ inputs.config }}
-                  INPUT_VERSION: ${{ inputs.version }}
+                  INPUT_VERSION: ${{ inputs.element-version }}
 
             - name: Build App
               run: |
