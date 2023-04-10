@@ -1,5 +1,5 @@
 # Original source: https://github.com/vector-im/element-desktop/blob/master/.github/workflows/build_linux.yaml
-# Changes: Add myconfig on lines 56-57
+# Changes: Add myconfig, clone element & create config
 
 # This workflow relies on actions/cache to store the hak dependency artifacts as they take a long time to build
 # Due to this extra care must be taken to only ever run all build_* scripts against the same branch to ensure
@@ -29,6 +29,13 @@ jobs:
                 shell: bash
         steps:
             - uses: actions/checkout@v3
+
+            - name: Load Element & Create Config
+              run: |
+                yarn load v1.11.28
+                mkdir myconfig
+                yarn create-config mtrx.intra.getzen.dev
+                yarn mv-to-root
 
             - uses: actions/download-artifact@v3
               with:
