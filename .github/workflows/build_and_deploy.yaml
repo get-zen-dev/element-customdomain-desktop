@@ -78,7 +78,7 @@ jobs:
         with:
             deploy-mode: true
             arch: x86
-            element-version: ${{ needs.prepare.outputs.element-version }}
+            element-version: ${{ inputs.element-version }}
             homeserver: ${{ inputs.homeserver }}
 
     windows_64bit:
@@ -90,7 +90,7 @@ jobs:
         with:
             deploy-mode: true
             arch: x64
-            element-version: ${{ needs.prepare.outputs.element-version }}
+            element-version: ${{ inputs.element-version }}
             homeserver: ${{ inputs.homeserver }}
 
     linux:
@@ -101,5 +101,5 @@ jobs:
         with:
             config: element.io/${{ inputs.mode || 'nightly' }}
             sqlcipher: system
-            element-version: ${{ needs.prepare.outputs.element-version }}
+            element-version: ${{ inputs.element-version }}
             homeserver: ${{ inputs.homeserver }}
