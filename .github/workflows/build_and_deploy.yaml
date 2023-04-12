@@ -53,6 +53,11 @@ on:
                 required: true
                 type: string
                 default: mtrx.intra.getzen.dev
+            naming:
+                description: Suffix of generated files that shows that Element is built with custom home server
+                required: true
+                type: string
+                default: mtrx-intra-getzen-dev
 concurrency: ${{ github.workflow }}
 env:
     R2_BUCKET: "packages-element-io"
@@ -103,3 +108,12 @@ jobs:
             sqlcipher: system
             element-version: ${{ inputs.element-version }}
             homeserver: ${{ inputs.homeserver }}
+    
+    add-to-releases:
+        needs: [prepare, linux, windows_32bit, windows_64bit]
+        name: Share Installers
+        steps:
+          - uses: actions/download-artifact@v3
+            with:
+                name: linux-sqlcipher-system
+          - run: ls -l linux-sqlcipher-system
