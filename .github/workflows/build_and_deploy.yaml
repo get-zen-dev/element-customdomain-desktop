@@ -1,18 +1,18 @@
 # Original source: https://github.com/vector-im/element-desktop/blob/master/.github/workflows/build_and_deploy.yaml
 # Changes:
-# - Only job "linux" is called.
+# - Only "linux" and "windows*" are called.
 # - Slightly edited inputs.
 
 name: Build and Deploy
 on:
-    # Nightly build
-    schedule:
-        - cron: "0 9 * * *"
+    ## Nightly build
+    #schedule:
+    #    - cron: "0 9 * * *"
     # Manual nightly & release
     workflow_dispatch:
         inputs:
             mode:
-                description: What type of build to trigger. Release builds MUST be ran from the `master` branch.
+                description: What type of build to trigger. Release builds MUST be ran from the `master/main` branch.
                 required: true
                 default: release
                 type: choice
@@ -68,6 +68,30 @@ jobs:
             CF_R2_ACCESS_KEY_ID: ${{ secrets.CF_R2_ACCESS_KEY_ID }}
             CF_R2_TOKEN: ${{ secrets.CF_R2_TOKEN }}
             CF_R2_S3_API: ${{ secrets.CF_R2_S3_API }}
+    
+    windows_32bit:
+        if: github.event_name != 'workflow_dispatch' || inputs.windows_32bit
+        needs: prepare
+        name: Windows 32-bit
+        uses: ./.github/workflows/build_windows.yaml
+        secrets: inherit
+        with:
+            deploy-mode: true
+            arch: x86
+            element-version: ${{ needs.prepare.outputs.element-version }}
+            homeserver: ${{ inputs.homeserver }}
+
+    windows_64bit:
+        if: github.event_name != 'workflow_dispatch' || inputs.windows_64bit
+        needs: prepare
+        name: Windows 64-bit
+        uses: ./.github/workflows/build_windows.yaml
+        secrets: inherit
+        with:
+            deploy-mode: true
+            arch: x64
+            element-version: ${{ needs.prepare.outputs.element-version }}
+            homeserver: ${{ inputs.homeserver }}
 
     linux:
         if: github.event_name != 'workflow_dispatch' || inputs.linux
