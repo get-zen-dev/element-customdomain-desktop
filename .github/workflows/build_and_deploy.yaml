@@ -109,6 +109,7 @@ jobs:
             homeserver: ${{ inputs.homeserver }}
     
     add-to-releases:
+        permissions: write-all
         needs: [prepare, linux, windows_32bit, windows_64bit]
         name: Release Installers
         uses: ./.github/workflows/add_to_releases.yaml
