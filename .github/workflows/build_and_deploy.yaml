@@ -12,7 +12,7 @@ on:
     workflow_dispatch:
         inputs:
             mode:
-                description: What type of build to trigger. Release builds MUST be ran from the `master` branch.
+                description: What type of build to trigger. Release builds MUST be ran from the `master/main` branch.
                 required: true
                 default: release
                 type: choice
