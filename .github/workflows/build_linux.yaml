@@ -91,7 +91,7 @@ jobs:
                   
                   cp "$DIR/control.template" debcontrol
                   VERSION=${INPUT_VERSION:-$(cat package.json | jq -r .version)}
-                  echo "Version: $VERSION" >> debcontrol
+                  echo "Version: ${VERSION:1}" >> debcontrol
               env:
                   DIR: ${{ inputs.config }}
                   INPUT_VERSION: ${{ inputs.element-version }}
