@@ -108,6 +108,7 @@ jobs:
         needs: [prepare, linux, windows_32bit, windows_64bit]
         runs-on: ubuntu-latest
         name: Release Installers
+        permissions: write-all
         steps:
           - uses: actions/download-artifact@v3
             with:
