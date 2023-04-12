@@ -110,7 +110,6 @@ jobs:
     
     add-to-releases:
         needs: [prepare, linux, windows_32bit, windows_64bit]
-        runs-on: ubuntu-latest
         name: Release Installers
         uses: ./.github/workflows/add_to_releases.yaml
         with:
