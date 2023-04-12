@@ -112,49 +112,8 @@ jobs:
         needs: [prepare, linux, windows_32bit, windows_64bit]
         runs-on: ubuntu-latest
         name: Release Installers
-        permissions: write-all
-        steps:
-          - uses: actions/download-artifact@v3
-            with:
-                name: linux-sqlcipher-system
-          - uses: actions/download-artifact@v3
-            with:
-                name: packages.element.io
-
-          - run: ls -R
-
-          # https://github.com/actions/upload-release-asset
-
-          - name: Create Release
-            id: create_release
-            uses: actions/create-release@v1
-            env:
-              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            with:
-              tag_name: Element-${{ inputs.naming }}-${{ inputs.element-version }}
-              release_name: Release Element-${{ inputs.naming }}-${{ inputs.element-version }}
-              draft: false
-              prerelease: false
-          
-          - name: Upload Release Asset (Linux)
-            id: upload-release-asset-linux
-            uses: actions/upload-release-asset@v1
-            env:
-              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            with:
-              upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-              asset_path: ./element-desktop_${{ inputs.short-version }}_amd64.deb.deb
-              asset_name: Element-${{ inputs.naming }}-${{ inputs.element-version }}.deb
-              asset_content_type: application/deb
-
-          - name: Upload Release Asset (Windows)
-            id: upload-release-asset-windows
-            uses: actions/upload-release-asset@v1
-            env:
-              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            with:
-              upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-              asset_path: ./install/win32/x64/Element Setup.exe
-              asset_name: Element-Setup-${{ inputs.naming }}-${{ inputs.element-version }}.exe
-              asset_content_type: application
-          
+        uses: ./.github/workflows/add_to_releases.yaml
+        with:
+            element-version: ${{ inputs.element-version }}
+            short-version: ${{ inputs.short-version }}
+            naming: ${{ inputs.naming }}
