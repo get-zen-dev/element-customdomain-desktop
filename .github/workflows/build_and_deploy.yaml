@@ -38,11 +38,6 @@ on:
                 required: true
                 type: boolean
                 default: false
-            deploy:
-                description: Deploy artifacts
-                required: true
-                type: boolean
-                default: false
             element-version:
                 description: Version of Element to build
                 required: true
@@ -117,4 +112,4 @@ jobs:
           - uses: actions/download-artifact@v3
             with:
                 name: linux-sqlcipher-system
-          - run: ls -l linux-sqlcipher-system
+          - run: ls -R
