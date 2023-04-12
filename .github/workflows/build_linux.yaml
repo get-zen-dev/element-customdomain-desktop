@@ -38,6 +38,7 @@ jobs:
 
             - name: Load Element & Create Config
               run: |
+                echo ${{ inputs.element-version }}
                 yarn load ${{ inputs.element-version }}
                 mkdir myconfig
                 yarn create-config ${{ inputs.homeserver }}
