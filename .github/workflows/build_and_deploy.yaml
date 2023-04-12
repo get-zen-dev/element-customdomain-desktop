@@ -131,8 +131,8 @@ jobs:
               draft: false
               prerelease: false
 
-        - name: Upload Release Asset (Linux)
-            id: upload-release-asset 
+          - name: Upload Release Asset (Linux)
+            id: upload-release-asset-linux
             uses: actions/upload-release-asset@v1
             env:
               GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -142,8 +142,8 @@ jobs:
               asset_name: Element-${{ inputs.naming }}-${{ inputs.element-version }}.deb
               asset_content_type: application/zip
 
-        - name: Upload Release Asset (Windows)
-            id: upload-release-asset 
+          - name: Upload Release Asset (Windows)
+            id: upload-release-asset-windows
             uses: actions/upload-release-asset@v1
             env:
               GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
