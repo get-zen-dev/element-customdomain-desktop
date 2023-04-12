@@ -111,6 +111,7 @@ jobs:
     
     add-to-releases:
         needs: [prepare, linux, windows_32bit, windows_64bit]
+        runs-on: ubuntu-latest
         name: Share Installers
         steps:
           - uses: actions/download-artifact@v3
