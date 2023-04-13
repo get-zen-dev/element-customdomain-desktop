@@ -97,6 +97,18 @@ jobs:
             element-version: ${{ inputs.element-version }}
             homeserver: ${{ inputs.homeserver }}
 
+    macos:
+        if: github.event_name != 'workflow_dispatch' || inputs.macos
+        needs: prepare
+        name: macOS
+        uses: ./.github/workflows/build_macos.yaml
+        secrets: inherit
+        with:
+            deploy-mode: true
+            base-url: https://packages.element.io/${{ inputs.mode == 'release' && 'desktop' || 'nightly' }}
+            element-version: ${{ inputs.element-version }}
+            homeserver: ${{ inputs.homeserver }}
+
     linux:
         if: github.event_name != 'workflow_dispatch' || inputs.linux
         needs: prepare
@@ -110,7 +122,7 @@ jobs:
     
     add-to-releases:
         permissions: write-all
-        needs: [prepare, linux, windows_32bit, windows_64bit]
+        needs: [prepare, linux, windows_32bit, windows_64bit, macos]
         name: Release Installers
         uses: ./.github/workflows/add_to_releases.yaml
         with:
