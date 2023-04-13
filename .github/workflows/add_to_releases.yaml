@@ -51,7 +51,7 @@ jobs:
           asset_content_type: application/deb
 
       - name: Upload Release Asset (Windows64)
-        id: upload-release-asset-windows
+        id: upload-release-asset-windows64
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -62,7 +62,7 @@ jobs:
           asset_content_type: application
 
       - name: Upload Release Asset (Windows32)
-        id: upload-release-asset-windows
+        id: upload-release-asset-windows32
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -73,7 +73,7 @@ jobs:
           asset_content_type: application
 
       - name: Upload Release Asset (Macos)
-        id: upload-release-asset-windows
+        id: upload-release-asset-macos
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
