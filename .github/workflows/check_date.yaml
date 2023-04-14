@@ -28,6 +28,7 @@ jobs:
           fi
   
   build:
+    permissions: write-all
     needs: check-date
     if: needs.check-date.outputs.needs-rebuild == 'true'
     uses: ./.github/workflows/build_and_deploy.yaml
