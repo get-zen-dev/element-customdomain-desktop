@@ -39,8 +39,20 @@ jobs:
           draft: false
           prerelease: false
       
-      - name: Upload Release Asset (Linux)
-        id: upload-release-asset-linux
+      
+      - name: Upload Release Asset (Linux Tar)
+        id: upload-release-asset-linux-tar
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+          asset_path: ./element-desktop-${{ inputs.short-version }}.tar.gz
+          asset_name: Element-linux-${{ inputs.naming }}-${{ inputs.element-version }}.tar.gz
+          asset_content_type: application/tar
+      
+      - name: Upload Release Asset (Linux Deb)
+        id: upload-release-asset-linux-debian
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
