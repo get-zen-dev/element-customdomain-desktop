@@ -10,6 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       needs-rebuild: ${{ steps.check.outputs.needs-rebuild }}
+      element-version: ${{ steps.check.outputs.element-version }}
+      short-version: ${{ steps.check.outputs.short-version }}
     steps:
       - uses: actions/checkout@v3
       - name: Check
@@ -24,6 +26,8 @@ jobs:
             echo "needs-rebuild=false" >> "$GITHUB_OUTPUT";
           else 
             echo "needs-rebuild=true" >> "$GITHUB_OUTPUT";
+            echo "element-version=${lst:7}" >> "$GITHUB_OUTPUT";
+            echo "short-version=${lst:8}" >> "$GITHUB_OUTPUT";
             echo $lst
           fi
   
@@ -38,7 +42,7 @@ jobs:
       windows_32bit: true
       windows_64bit: true
       linux: true
-      element-version: "v1.11.29"
-      short-version: "1.11.28"
+      element-version: needs.check-date.outputs.element-version
+      short-version: needs.check-date.outputs.short-version
       homeserver: "mtrx.intra.getzen.dev"
       naming: "mtrx-intra-getzen-dev"
