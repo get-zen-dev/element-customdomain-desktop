@@ -5,7 +5,7 @@ on:
     inputs:
       days:
         required: true
-        type: choise
+        type: choice
         options:
           - '1'
           - '365'
