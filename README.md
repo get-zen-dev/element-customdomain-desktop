@@ -1,13 +1,7 @@
 # chs-element-desktop
 
-Build [Element Desktop](https://github.com/vector-im/element-desktop) with custom home server.
+This repo builds [Element Desktop](https://github.com/vector-im/element-desktop) with custom home server.
 
-## How to use
+Action [Build And Deploy](./.github/workflows/build_and_deploy.yaml) can be run manually with specifying OS, homeserver and Element version.
 
-![](./images/workflow_run.jpeg)
-
-1. Fork this repository
-2. Choose workflow "Build and deploy" in actions (like at image)
-3. Select operating systems that you need, specify version of element that you need and name of server that you want to use like your homeserver
-4. Short version should be the same as version without "v" - preffix (like at image)
-5. Suffix of generated files will be used only for the names of outputs installers
+Action [Check New Versions](./.github/workflows/check_date.yaml) runs on schedule and builds the latest version of Element (if it was released after the previous run of this action) for all OS with our homeserver.
