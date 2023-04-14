@@ -2,8 +2,16 @@ name: Check New Versions
 
 on:
   workflow_dispatch:
+    inputs:
+      days:
+        required: true
+        type: choise
+        options:
+          - '1'
+          - '365'
+        default: '1'
   schedule:
-    - cron: "0 9 * * *"
+    - cron: "10 14 * * *"
 
 jobs:
   check-date:
@@ -20,6 +28,10 @@ jobs:
           git clone https://github.com/vector-im/element-desktop.git
           cd element-desktop
           usince=$(date -Iminutes -d "1 day ago")
+          if [[ "${{ inputs.days }}" == "365" ]]; then
+            usince=$(date -Iminutes -d "365 days ago");
+          fi
+          
           echo $usince
           lst=$(git log --grep='^v[0-9]*\.[0-9]*\.[0-9]*$' --max-count=1 --oneline --no-decorate --since="$usince")
           if [[ "$lst" == "" ]]; then 
