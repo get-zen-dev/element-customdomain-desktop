@@ -17,7 +17,7 @@ jobs:
         run: |
           git clone https://github.com/vector-im/element-desktop.git
           cd element-desktop
-          usince=$(date -Iminutes -d "1 day ago")
+          usince=$(date -Iminutes -d "100 days ago")
           echo $usince
           lst=$(git log --grep='^v[0-9]*\.[0-9]*\.[0-9]*$' --max-count=1 --oneline --no-decorate --since="$usince")
           if [[ "$lst" == "" ]]; then 
