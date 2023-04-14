@@ -1,3 +1,5 @@
+name: Check New Versions
+
 on:
   workflow_dispatch:
   schedule:
@@ -6,12 +8,21 @@ on:
 jobs:
   check-date:
     runs-on: ubuntu-latest
+    outputs:
+      needs-rebuild: ${{ steps.check.outputs.needs-rebuild }}
     steps:
       - uses: actions/checkout@v3
-      - run: |
+      - name: Check
+        id: check
+        run: |
           git clone https://github.com/vector-im/element-desktop.git
           cd element-desktop
           usince=$(date -Iminutes -d "1 day ago")
           echo $usince
           lst=$(git log --grep='^v[0-9]*\.[0-9]*\.[0-9]*$' --max-count=1 --oneline --no-decorate --since="$usince")
-          if [[ "$lst" == "" ]]; then echo "No updates last day." ; else echo "OK"; fi
+          if [[ "$lst" == "" ]]; then 
+            echo "needs-rebuild=false" >> "$GITHUB_OUTPUT";
+          else 
+            echo "needs-rebuild=true" >> "$GITHUB_OUTPUT";
+            echo $lst
+          fi
