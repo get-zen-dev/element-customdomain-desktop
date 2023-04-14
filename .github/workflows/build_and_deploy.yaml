@@ -63,9 +63,7 @@ on:
                 description: What type of build to trigger. Release builds MUST be ran from the `master/main` branch.
                 required: true
                 default: release
-                type: choice
-                options:
-                    - release
+                type: string
             macos:
                 description: Build macOS
                 required: true
