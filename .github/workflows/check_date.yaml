@@ -11,7 +11,7 @@ on:
           - '365'
         default: '1'
   schedule:
-    - cron: "10 14 * * *"
+    - cron: "0 9 * * *"
 
 jobs:
   check-date:
