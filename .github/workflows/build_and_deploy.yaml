@@ -9,9 +9,6 @@ on:
     #    - cron: "0 9 * * *"
     # Manual nightly & release
     workflow_dispatch:
-        secrets:
-            homeserver:
-                required: true
         inputs:
             mode:
                 description: What type of build to trigger. Release builds MUST be ran from the `master/main` branch.
@@ -53,7 +50,7 @@ on:
                 description: Suffix of generated files that shows that Element is built with custom home server
                 required: true
                 type: string
-                default: mtrx-intra-getzen-dev
+                default: custom-hs
     workflow_call:
         secrets:
             homeserver:
