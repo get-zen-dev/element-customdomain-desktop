@@ -2,7 +2,7 @@
     "scripts": {
         "clone-desktop": "git clone https://github.com/vector-im/element-desktop.git",
         "load": "yarn run clone-desktop && cd element-desktop && git checkout master && git checkout",
-        "create-config": "gcc main.c -o set_server.exe && ./set_server.exe element-desktop/element.io/release/config.json myconfig/config.json",
+        "create-config": "mkdir myconfig && cp element-desktop/element.io/release/config.json myconfig/config.json",
         "mv-to-root": "mv element-desktop/* ./"
     }
 }
