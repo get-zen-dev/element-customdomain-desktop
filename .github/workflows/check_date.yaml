@@ -58,4 +58,4 @@ jobs:
       linux: true
       element-version: ${{ needs.check-date.outputs.element-version }}
       short-version: ${{ needs.check-date.outputs.short-version }}
-      naming: "mtrx-intra-getzen-dev"
+      naming: "custom-hs"
