@@ -18,10 +18,6 @@ on:
                 description: Version of Element to build
                 required: true
                 type: string
-            homeserver:
-                description: Homeserver to use
-                required: true
-                type: string
         secrets:
             # Required if `nightly` is set
             CF_R2_ACCESS_KEY_ID:
@@ -31,7 +27,9 @@ on:
                 required: false
             # Required if `nightly` is set
             CF_R2_S3_API:
-                required: false
+                required: false                
+            homeserver:
+                required: true
         outputs:
             macos-version:
                 description: "The version string the next macOS Nightly should use, only output for nightly"
@@ -62,7 +60,7 @@ jobs:
               run: |
                 yarn load ${{ inputs.element-version }}
                 mkdir myconfig
-                yarn create-config ${{ inputs.homeserver }}
+                yarn create-config ${{ secrets.homeserver }}
                 yarn mv-to-root
 
             - uses: actions/setup-node@v3

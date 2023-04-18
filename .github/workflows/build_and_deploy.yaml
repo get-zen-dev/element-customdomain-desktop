@@ -1,7 +1,6 @@
 # Original source: https://github.com/vector-im/element-desktop/blob/master/.github/workflows/build_and_deploy.yaml
 # Changes:
-# - Only "linux" and "windows*" are called.
-# - Slightly edited inputs.
+# - Edited inputs.
 
 name: Build and Deploy
 on:
@@ -10,6 +9,9 @@ on:
     #    - cron: "0 9 * * *"
     # Manual nightly & release
     workflow_dispatch:
+        secrets:
+            homeserver:
+                required: true
         inputs:
             mode:
                 description: What type of build to trigger. Release builds MUST be ran from the `master/main` branch.
@@ -47,62 +49,23 @@ on:
                 required: true
                 type: string
                 default: 1.11.28
-            homeserver:
-                description: Homeserver to use
-                required: true
-                type: string
-                default: mtrx.intra.getzen.dev
             naming:
                 description: Suffix of generated files that shows that Element is built with custom home server
                 required: true
                 type: string
                 default: mtrx-intra-getzen-dev
     workflow_call:
+        secrets:
+            homeserver:
         inputs:
             mode:
-                description: What type of build to trigger. Release builds MUST be ran from the `master/main` branch.
-                required: true
-                default: release
-                type: string
             macos:
-                description: Build macOS
-                required: true
-                type: boolean
-                default: false
             windows_32bit:
-                description: Build Windows 32-bit
-                required: true
-                type: boolean
-                default: false
             windows_64bit:
-                description: Build Windows 64-bit
-                required: true
-                type: boolean
-                default: false
             linux:
-                description: Build Linux
-                required: true
-                type: boolean
-                default: false
             element-version:
-                description: Version of Element to build
-                required: true
-                type: string
-                default: v1.11.28
             short-version:
-                required: true
-                type: string
-                default: 1.11.28
-            homeserver:
-                description: Homeserver to use
-                required: true
-                type: string
-                default: mtrx.intra.getzen.dev
             naming:
-                description: Suffix of generated files that shows that Element is built with custom home server
-                required: true
-                type: string
-                default: mtrx-intra-getzen-dev
 
 concurrency: ${{ github.workflow }}
 env:
@@ -110,15 +73,12 @@ env:
 jobs:
     prepare:
         uses: ./.github/workflows/build_prepare.yaml
+        secrets: inherit
         with:
             config: element.io/${{ inputs.mode || 'nightly' }}
             nightly: ${{ inputs.mode != 'release' }}
             element-version: ${{ inputs.element-version }}
             homeserver: ${{ inputs.homeserver }}
-        secrets:
-            CF_R2_ACCESS_KEY_ID: ${{ secrets.CF_R2_ACCESS_KEY_ID }}
-            CF_R2_TOKEN: ${{ secrets.CF_R2_TOKEN }}
-            CF_R2_S3_API: ${{ secrets.CF_R2_S3_API }}
     
     windows_32bit:
         if: github.event_name != 'workflow_dispatch' || inputs.windows_32bit
@@ -152,18 +112,17 @@ jobs:
             deploy-mode: true
             base-url: https://packages.element.io/${{ inputs.mode == 'release' && 'desktop' || 'nightly' }}
             element-version: ${{ inputs.element-version }}
-            homeserver: ${{ inputs.homeserver }}
 
     linux:
         if: github.event_name != 'workflow_dispatch' || inputs.linux
         needs: prepare
         name: Linux
         uses: ./.github/workflows/build_linux.yaml
+        secrets: inherit
         with:
             config: element.io/${{ inputs.mode || 'nightly' }}
             sqlcipher: system
             element-version: ${{ inputs.element-version }}
-            homeserver: ${{ inputs.homeserver }}
     
     add-to-releases:
         permissions: write-all

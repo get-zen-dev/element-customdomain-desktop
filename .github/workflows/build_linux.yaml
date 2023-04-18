@@ -8,6 +8,9 @@
 # the correct cache scoping, and additional care must be taken to not run untrusted actions on the develop branch.
 on:
     workflow_call:
+        secrets:
+            homeserver:
+                required: true
         inputs:
             config:
                 type: string
@@ -19,10 +22,6 @@ on:
                 description: "How to link sqlcipher, one of 'system' | 'static'"
             element-version:
                 description: Version of Element to build
-                required: true
-                type: string
-            homeserver:
-                description: Homeserver to use
                 required: true
                 type: string
 jobs:
@@ -38,10 +37,9 @@ jobs:
 
             - name: Load Element & Create Config
               run: |
-                echo ${{ inputs.element-version }}
                 yarn load ${{ inputs.element-version }}
                 mkdir myconfig
-                yarn create-config ${{ inputs.homeserver }}
+                yarn create-config ${{ secrets.homeserver }}
                 yarn mv-to-root
 
             - uses: actions/download-artifact@v3
