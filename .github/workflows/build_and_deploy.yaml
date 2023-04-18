@@ -57,6 +57,7 @@ on:
     workflow_call:
         secrets:
             homeserver:
+                required: true
         inputs:
             mode:
                 type: string
