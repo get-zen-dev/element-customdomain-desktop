@@ -27,7 +27,8 @@ jobs:
         run: |
           git clone https://github.com/vector-im/element-desktop.git
           cd element-desktop
-          usince=$(date -Iminutes -d "1 day ago")
+
+          usince=$(date -Iminutes -d "1 day ago 20 minutes ago")
           if [[ "${{ inputs.days }}" == "365" ]]; then
             usince=$(date -Iminutes -d "365 days ago");
           fi
@@ -48,6 +49,7 @@ jobs:
     needs: check-date
     if: needs.check-date.outputs.needs-rebuild == 'true'
     uses: ./.github/workflows/build_and_deploy.yaml
+    secrets: inherit
     with:
       mode: "release"
       macos: true
@@ -56,5 +58,4 @@ jobs:
       linux: true
       element-version: ${{ needs.check-date.outputs.element-version }}
       short-version: ${{ needs.check-date.outputs.short-version }}
-      homeserver: "mtrx.intra.getzen.dev"
       naming: "mtrx-intra-getzen-dev"
