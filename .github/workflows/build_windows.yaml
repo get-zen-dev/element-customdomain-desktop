@@ -15,6 +15,9 @@ on:
                 required: false
             ESIGNER_USER_TOTP:
                 required: false
+            homeserver:
+                required: true
+                type: string
         inputs:
             arch:
                 type: string
@@ -30,10 +33,6 @@ on:
                 description: "Whether to arrange artifacts in the arrangement needed for deployment, skipping unrelated ones"
             element-version:
                 description: Version of Element to build
-                required: true
-                type: string
-        secrets:
-            homeserver:
                 required: true
                 type: string
 jobs:
