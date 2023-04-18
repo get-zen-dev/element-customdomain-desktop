@@ -86,7 +86,6 @@ jobs:
             config: element.io/${{ inputs.mode || 'nightly' }}
             nightly: ${{ inputs.mode != 'release' }}
             element-version: ${{ inputs.element-version }}
-            homeserver: ${{ inputs.homeserver }}
     
     windows_32bit:
         if: github.event_name != 'workflow_dispatch' || inputs.windows_32bit
