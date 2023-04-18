@@ -32,8 +32,8 @@ on:
                 description: Version of Element to build
                 required: true
                 type: string
+        secrets:
             homeserver:
-                description: Homeserver to use
                 required: true
                 type: string
 jobs:
@@ -73,7 +73,7 @@ jobs:
               run: |
                 yarn load ${{ inputs.element-version }}
                 mkdir myconfig
-                yarn create-config ${{ inputs.homeserver }}
+                yarn create-config ${{ secrets.homeserver }}
                 yarn mv-to-root
 
             - uses: actions/download-artifact@v3
