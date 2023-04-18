@@ -50,7 +50,7 @@ jobs:
                 yarn load ${{ inputs.element-version }}
                 mkdir myconfig
                 yarn create-config
-                sed -i 's/\"default_server_name\": \"matrix.org\",/\"default_server_name\": \"${{ secrets.homeserver }}\",/g' myconfig/config.json
+                sed -i'.original' 's/\"default_server_name\": \"matrix.org\",/\"default_server_name\": \"${{ secrets.homeserver }}\",/g' myconfig/config.json
                 yarn mv-to-root
 
             - uses: actions/download-artifact@v3
