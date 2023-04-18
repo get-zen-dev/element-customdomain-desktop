@@ -130,7 +130,6 @@ jobs:
             deploy-mode: true
             arch: x86
             element-version: ${{ inputs.element-version }}
-            homeserver: ${{ inputs.homeserver }}
 
     windows_64bit:
         if: github.event_name != 'workflow_dispatch' || inputs.windows_64bit
@@ -142,7 +141,6 @@ jobs:
             deploy-mode: true
             arch: x64
             element-version: ${{ inputs.element-version }}
-            homeserver: ${{ inputs.homeserver }}
 
     macos:
         if: github.event_name != 'workflow_dispatch' || inputs.macos
