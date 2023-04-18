@@ -61,6 +61,17 @@ jobs:
           asset_path: ./element-desktop_${{ inputs.short-version }}_amd64.deb
           asset_name: Element-linux-${{ inputs.naming }}-${{ inputs.element-version }}.deb
           asset_content_type: application/deb
+      
+      - name: Upload Release Asset (Windows32)
+        id: upload-release-asset-windows32
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+          asset_path: ./install/win32/ia32/Element Setup ${{ inputs.short-version }}.exe
+          asset_name: Element-win32-Setup-${{ inputs.naming }}-${{ inputs.element-version }}.exe
+          asset_content_type: application
 
       - name: Upload Release Asset (Windows64)
         id: upload-release-asset-windows64
@@ -71,17 +82,6 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
           asset_path: ./install/win32/x64/Element Setup ${{ inputs.short-version }}.exe
           asset_name: Element-win64-Setup-${{ inputs.naming }}-${{ inputs.element-version }}.exe
-          asset_content_type: application
-
-      - name: Upload Release Asset (Windows32)
-        id: upload-release-asset-windows32
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-          asset_path: ./install/win32/ia32/Element Setup ${{ inputs.short-version }}.exe
-          asset_name: Element-win32-Setup-${{ inputs.naming }}-${{ inputs.element-version }}.exe
           asset_content_type: application
 
       - name: Upload Release Asset (Macos)

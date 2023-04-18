@@ -59,13 +59,21 @@ on:
             homeserver:
         inputs:
             mode:
+                type: string
             macos:
+                type: boolean
             windows_32bit:
+                type: boolean
             windows_64bit:
+                type: boolean
             linux:
+                type: boolean
             element-version:
+                type: string
             short-version:
+                type: string
             naming:
+                type: string
 
 concurrency: ${{ github.workflow }}
 env:
