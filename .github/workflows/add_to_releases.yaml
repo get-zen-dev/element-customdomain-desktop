@@ -94,3 +94,14 @@ jobs:
           asset_path: ./install/macos/Element-${{ inputs.short-version }}-universal.dmg
           asset_name: Element-macos-Setup-${{ inputs.naming }}-${{ inputs.element-version }}.dmg
           asset_content_type: application
+      
+      - name: Upload Release Asset (Windows64 Update)
+        id: upload-release-asset-windows64-update
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+          asset_path: ./update/win32/x64/element-desktop-${{ inputs.short-version }}-full.nupkg
+          asset_name: element-desktop-${{ inputs.short-version }}-full.nupkg
+          asset_content_type: application
