@@ -79,7 +79,8 @@ jobs:
                 cp element-desktop/element.io/release/config.json myconfig/config.json
                 sed -i 's/\"default_server_name\": \"matrix.org\",/\"default_server_name\": \"${{ secrets.homeserver }}\",/g' myconfig/config.json
                 sed -i 's/\"update_base_url\": \"https:\/\/packages.element.io\/desktop\/update\/\",/\"update_base_url\": \"https:\/\/localhost\/\",/g' myconfig/config.json
-                mv element-desktop/* ./
+                mv -n element-desktop/* ./
+                ls
 
             - uses: actions/download-artifact@v3
               with:
