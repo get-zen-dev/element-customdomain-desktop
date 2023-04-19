@@ -1,5 +1,0 @@
-{
-    "scripts": {
-        "mv-to-root": "mv element-desktop/* ./"
-    }
-}
