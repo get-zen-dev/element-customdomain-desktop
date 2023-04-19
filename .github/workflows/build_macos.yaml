@@ -85,7 +85,7 @@ jobs:
 
             # Does not need branch matching as only analyses this layer
             - name: Install Deps
-              run: "yarn install --frozen-lockfile"
+              run: "yarn install" #--frozen-lockfile"
 
             - name: Change config
               run: "yarn run fetch --noverify --cfgdir myconfig"

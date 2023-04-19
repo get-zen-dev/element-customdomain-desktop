@@ -21,22 +21,22 @@ on:
                 description: Build macOS
                 required: true
                 type: boolean
-                default: false
+                default: true
             windows_32bit:
                 description: Build Windows 32-bit
                 required: true
                 type: boolean
-                default: false
+                default: true
             windows_64bit:
                 description: Build Windows 64-bit
                 required: true
                 type: boolean
-                default: false
+                default: true
             linux:
                 description: Build Linux
                 required: true
                 type: boolean
-                default: false
+                default: true
             element-version:
                 description: Version of Element to build
                 required: true
