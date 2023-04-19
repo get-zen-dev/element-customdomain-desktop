@@ -106,8 +106,8 @@ jobs:
           asset_name: RELEASES
           asset_content_type: application
       
-      - name: Upload Release Asset (Windows64 Update)
-        id: upload-release-asset-windows64-update
+      - name: Upload Release Asset (Windows64 Update Releases Text)
+        id: upload-release-asset-windows64-update-releases-text
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
