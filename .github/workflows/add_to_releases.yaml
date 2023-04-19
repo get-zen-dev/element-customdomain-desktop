@@ -49,7 +49,7 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
           asset_path: ./element-desktop-${{ inputs.short-version }}.tar.gz
           asset_name: Element-linux-${{ inputs.naming }}-${{ inputs.element-version }}.tar.gz
-          asset_content_type: application/tar
+          asset_content_type: application
       
       - name: Upload Release Asset (Linux Deb)
         id: upload-release-asset-linux-debian
@@ -60,7 +60,7 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
           asset_path: ./element-desktop_${{ inputs.short-version }}_amd64.deb
           asset_name: Element-linux-${{ inputs.naming }}-${{ inputs.element-version }}.deb
-          asset_content_type: application/deb
+          asset_content_type: application
       
       - name: Upload Release Asset (Windows32)
         id: upload-release-asset-windows32
@@ -102,6 +102,17 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-          asset_path: ./update/win32/x64/element-desktop-${{ inputs.short-version }}-full.nupkg
-          asset_name: element-desktop-${{ inputs.short-version }}-full.nupkg
+          asset_path: ./update/win32/x64/RELEASES
+          asset_name: RELEASES
           asset_content_type: application
+      
+      - name: Upload Release Asset (Windows64 Update)
+        id: upload-release-asset-windows64-update
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+          asset_path: ./update/win32/x64/RELEASES
+          asset_name: RELEASES
+          asset_content_type: text
