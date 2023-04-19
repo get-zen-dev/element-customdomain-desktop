@@ -30,6 +30,8 @@ on:
                 required: false                
             homeserver:
                 required: true
+            update_folder:
+                required: true
         outputs:
             macos-version:
                 description: "The version string the next macOS Nightly should use, only output for nightly"
@@ -67,7 +69,7 @@ jobs:
                 mkdir myconfig
                 cp element-desktop/element.io/release/config.json myconfig/config.json
                 sed -i 's/\"default_server_name\": \"matrix.org\",/\"default_server_name\": \"${{ secrets.homeserver }}\",/g' myconfig/config.json
-                sed -i 's/\"update_base_url\": \"https:\/\/packages.element.io\/desktop\/update\/\",//g' myconfig/config.json
+                sed -i 's/\"update_base_url\": \"https:\/\/packages.element.io\/desktop\/update\/\",/\"update_base_url\": \"${{ secrets.update_folder }}\",/g' myconfig/config.json
                 mv element-desktop/* ./
 
             - uses: actions/setup-node@v3

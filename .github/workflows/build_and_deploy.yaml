@@ -55,6 +55,8 @@ on:
         secrets:
             homeserver:
                 required: true
+            update_folder:
+                required: true
         inputs:
             mode:
                 type: string
