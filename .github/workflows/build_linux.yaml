@@ -37,11 +37,17 @@ jobs:
 
             - name: Load Element & Create Config
               run: |
-                yarn load ${{ inputs.element-version }}
+                git clone https://github.com/vector-im/element-desktop.git
+                cd element-desktop
+                git checkout master
+                git checkout ${{ inputs.element-version }}
+                cd ..
+
                 mkdir myconfig
-                yarn create-config
+                cp element-desktop/element.io/release/config.json myconfig/config.json
                 sed -i 's/\"default_server_name\": \"matrix.org\",/\"default_server_name\": \"${{ secrets.homeserver }}\",/g' myconfig/config.json
-                yarn mv-to-root
+                sed -i 's/\"update_base_url\": \"https:\/\/packages.element.io\/desktop\/update\/\",//g' myconfig/config.json
+                mv element-desktop/* ./
 
             - uses: actions/download-artifact@v3
               with:
