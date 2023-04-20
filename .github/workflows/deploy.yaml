@@ -25,9 +25,6 @@ jobs:
           chmod +x $HOME/minio-binaries/mc
           export PATH=$PATH:$HOME/minio-binaries/
 
-          mc --help
-      
-      - run: |
           mc alias set wr "$API" "$ACCESS_KEY" "$SECRET_KEY"
           mc cp --recursive testdir/ wr/"$BUCKET_NAME"/
         env:
