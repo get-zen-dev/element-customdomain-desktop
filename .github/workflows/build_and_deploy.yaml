@@ -155,3 +155,9 @@ jobs:
             element-version: ${{ inputs.element-version }}
             short-version: ${{ inputs.short-version }}
             naming: ${{ inputs.naming }}
+    
+    deploy:
+        permissions: write-all
+        needs: [prepare, linux, windows_32bit, windows_64bit, macos]
+        uses: ./.github/workflows/deploy.yaml
+        secrets: inherit

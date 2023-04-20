@@ -1,0 +1,16 @@
+on:
+  workflow_call:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions: write-all
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+            path: packages.element.io
+            name: packages.element.io
+      
+      - run: ls -R
+
+      - run: mc --help
