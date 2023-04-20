@@ -1,24 +1,26 @@
 on:
   workflow_call:
-  workflow_dispatch:
+    secrets:
+      api:
+        required: true
+      access_key:
+        required: true
+      secret_key:
+        required: true
+      bucket_name:
+        required: true
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     permissions: write-all
     steps:
-      #- uses: actions/download-artifact@v3
-      #  with:
-      #      path: packages.element.io
-      #      name: packages.element.io
+      - uses: actions/download-artifact@v3
+        with:
+            path: packages.element.io
+            name: packages.element.io
       
-      #- run: ls -R
-
-      - run: |
-          mkdir testdir
-          touch testdir/test.txt
-          echo "1234" > testdir/test.txt
-        name: Prepare Files
+      - run: ls -R
 
       - run: |
           curl https://dl.min.io/client/mc/release/linux-amd64/mc --create-dirs -o $HOME/minio-binaries/mc
@@ -27,7 +29,7 @@ jobs:
           export PATH=$PATH:$HOME/minio-binaries/
 
           mc alias set wr "$API" "$ACCESS_KEY" "$SECRET_KEY"
-          mc cp --recursive testdir/ wr/"$BUCKET_NAME"/
+          mc cp --recursive packages.element.io/ wr/"$BUCKET_NAME"/
         env:
           API: ${{ secrets.api }}
           ACCESS_KEY: ${{ secrets.access_key }}

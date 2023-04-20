@@ -65,6 +65,14 @@ on:
                 required: true
             update_folder:
                 required: true
+            api:
+                required: true
+            access_key:
+                required: true
+            secret_key:
+                required: true
+            bucket_name:
+                required: true
         inputs:
             mode:
                 type: string
