@@ -81,7 +81,7 @@ jobs:
 
                 mkdir myconfig
                 cp element-desktop/element.io/release/config.json myconfig/config.json
-                sed -i 's/\"default_server_name\": \"matrix.org\",/\"default_server_name\": \"${{ secrets.homeserver }}\",/g' myconfig/config.json
+                sed -i 's#\"default_server_name\": \"matrix.org\",#\"default_server_name\": \"${{ secrets.homeserver }}\",#g' myconfig/config.json
 
                 if ( "${{ inputs.update-policy }}" -eq "custom" )
                 {
