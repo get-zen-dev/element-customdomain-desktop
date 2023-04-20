@@ -149,7 +149,6 @@ jobs:
     add-to-releases:
         permissions: write-all
         needs: [prepare, linux, windows_32bit, windows_64bit, macos]
-        name: Release Installers
         uses: ./.github/workflows/add_to_releases.yaml
         with:
             element-version: ${{ inputs.element-version }}
