@@ -29,7 +29,7 @@ jobs:
       
       - run: |
           mc alias set wr "$API" "$ACCESS_KEY" "$SECRET_KEY"
-          mc cp --recursive testdir/ wr/"$BUCKET_NAME"
+          mc cp --recursive testdir/ wr/"$BUCKET_NAME"/
         env:
           API: ${{ secrets.api }}
           ACCESS_KEY: ${{ secrets.access_key }}
