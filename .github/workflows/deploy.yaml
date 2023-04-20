@@ -18,6 +18,7 @@ jobs:
           mkdir testdir
           touch testdir/test.txt
           echo "1234" > testdir/test.txt
+        name: Prepare Files
 
       - run: |
           curl https://dl.min.io/client/mc/release/linux-amd64/mc --create-dirs -o $HOME/minio-binaries/mc
@@ -32,3 +33,4 @@ jobs:
           ACCESS_KEY: ${{ secrets.access_key }}
           SECRET_KEY: ${{ secrets.secret_key }}
           BUCKET_NAME: ${{ secrets.bucket_name }}
+        name: Deploy
