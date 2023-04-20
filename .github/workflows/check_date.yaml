@@ -59,3 +59,4 @@ jobs:
       element-version: ${{ needs.check-date.outputs.element-version }}
       short-version: ${{ needs.check-date.outputs.short-version }}
       naming: ${{ vars.naming }}
+      update-policy: custom

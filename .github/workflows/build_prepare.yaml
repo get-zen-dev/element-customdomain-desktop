@@ -18,6 +18,8 @@ on:
                 description: Version of Element to build
                 required: true
                 type: string
+            update-policy:
+                type: string
         secrets:
             # Required if `nightly` is set
             CF_R2_ACCESS_KEY_ID:
@@ -69,7 +71,15 @@ jobs:
                 mkdir myconfig
                 cp element-desktop/element.io/release/config.json myconfig/config.json
                 sed -i 's/\"default_server_name\": \"matrix.org\",/\"default_server_name\": \"${{ secrets.homeserver }}\",/g' myconfig/config.json
-                sed -i 's/\"update_base_url\": \"https:\/\/packages.element.io\/desktop\/update\/\",/\"update_base_url\": \"${{ secrets.update_folder }}\",/g' myconfig/config.json
+
+                if [[ "${{ inputs.update-policy }}" == "custom" ]]; then
+                  sed -i 's/\"update_base_url\": \"https:\/\/packages.element.io\/desktop\/update\/\",/\"update_base_url\": \""${{ secrets.update_folder }}\"",/g' myconfig/config.json;
+                fi
+
+                if [[ "${{ inputs.update-policy }}" == "none" ]]; then
+                  sed -i 's/\"update_base_url\": \"https:\/\/packages.element.io\/desktop\/update\/\",//g' myconfig/config.json;
+                fi
+                
                 mv element-desktop/* ./
 
             - uses: actions/setup-node@v3

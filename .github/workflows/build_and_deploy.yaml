@@ -51,6 +51,14 @@ on:
                 required: true
                 type: string
                 default: custom-hs
+            update-policy:
+                required: true
+                default: custom
+                type: choice
+                options:
+                    - custom
+                    - original
+                    - none
     workflow_call:
         secrets:
             homeserver:
@@ -74,6 +82,8 @@ on:
                 type: string
             naming:
                 type: string
+            update-policy:
+                type: string
 
 concurrency: ${{ github.workflow }}
 env:
@@ -86,6 +96,7 @@ jobs:
             config: element.io/${{ inputs.mode || 'nightly' }}
             nightly: ${{ inputs.mode != 'release' }}
             element-version: ${{ inputs.element-version }}
+            update-policy: ${{ inputs.update-policy }}
     
     windows_32bit:
         if: github.event_name != 'workflow_dispatch' || inputs.windows_32bit
@@ -97,6 +108,7 @@ jobs:
             deploy-mode: true
             arch: x86
             element-version: ${{ inputs.element-version }}
+            update-policy: ${{ inputs.update-policy }}
 
     windows_64bit:
         if: github.event_name != 'workflow_dispatch' || inputs.windows_64bit
@@ -108,6 +120,7 @@ jobs:
             deploy-mode: true
             arch: x64
             element-version: ${{ inputs.element-version }}
+            update-policy: ${{ inputs.update-policy }}
 
     macos:
         if: github.event_name != 'workflow_dispatch' || inputs.macos
@@ -119,6 +132,7 @@ jobs:
             deploy-mode: true
             base-url: https://packages.element.io/${{ inputs.mode == 'release' && 'desktop' || 'nightly' }}
             element-version: ${{ inputs.element-version }}
+            update-policy: ${{ inputs.update-policy }}
 
     linux:
         if: github.event_name != 'workflow_dispatch' || inputs.linux
@@ -130,6 +144,7 @@ jobs:
             config: element.io/${{ inputs.mode || 'nightly' }}
             sqlcipher: system
             element-version: ${{ inputs.element-version }}
+            update-policy: ${{ inputs.update-policy }}
     
     add-to-releases:
         permissions: write-all
