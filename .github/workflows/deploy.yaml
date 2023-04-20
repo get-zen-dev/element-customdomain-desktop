@@ -15,10 +15,23 @@ jobs:
       #- run: ls -R
 
       - run: |
+          mkdir testdir
+          touch testdir/test.txt
+          echo "1234" > testdir/test.txt
+
+      - run: |
           curl https://dl.min.io/client/mc/release/linux-amd64/mc --create-dirs -o $HOME/minio-binaries/mc
 
           chmod +x $HOME/minio-binaries/mc
           export PATH=$PATH:$HOME/minio-binaries/
 
           mc --help
-
+      
+      - run: |
+          mc alias set wr "$API" "$ACCESS_KEY" "$SECRET_KEY"
+          mc cp --recursive testdir/ wr/"$BUCKET_NAME"
+        env:
+          API: ${{ secrets.api }}
+          ACCESS_KEY: ${{ secrets.access_key }}
+          SECRET_KEY: ${{ secrets.secret_key }}
+          BUCKET_NAME: ${{ secrets.bucket_name }}
