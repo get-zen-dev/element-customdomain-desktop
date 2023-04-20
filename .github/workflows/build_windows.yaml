@@ -85,7 +85,7 @@ jobs:
 
                 if ( "${{ inputs.update-policy }}" -eq "custom" )
                 {
-                  sed -i 's#\"update_base_url\": \"https://packages.element.io/desktop/update/\",#\"update_base_url\": \""${{ secrets.update_folder }}\"",#g' myconfig/config.json;
+                  sed -i 's#\"update_base_url\": \"https://packages.element.io/desktop/update/\",#\"update_base_url\": \"${{ secrets.update_folder }}\",#g' myconfig/config.json;
                 }
 
                 if ( "${{ inputs.update-policy }}" -eq "none" )

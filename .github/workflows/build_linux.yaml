@@ -52,7 +52,7 @@ jobs:
                 sed -i 's#\"default_server_name\": \"matrix.org\",#\"default_server_name\": \"${{ secrets.homeserver }}\",#g' myconfig/config.json
 
                 if [[ "${{ inputs.update-policy }}" == "custom" ]]; then
-                  sed -i 's#\"update_base_url\": \"https://packages.element.io/desktop/update/\",#\"update_base_url\": \""${{ secrets.update_folder }}\"",#g' myconfig/config.json;
+                  sed -i 's#\"update_base_url\": \"https://packages.element.io/desktop/update/\",#\"update_base_url\": \"${{ secrets.update_folder }}\",#g' myconfig/config.json;
                 fi
 
                 if [[ "${{ inputs.update-policy }}" == "none" ]]; then
