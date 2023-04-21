@@ -137,6 +137,7 @@ jobs:
         uses: ./.github/workflows/build_macos.yaml
         secrets: inherit
         with:
+            sign: true
             deploy-mode: true
             base-url: https://packages.element.io/${{ inputs.mode == 'release' && 'desktop' || 'nightly' }}
             element-version: ${{ inputs.element-version }}
