@@ -1,6 +1,4 @@
 # Original source: https://github.com/vector-im/element-desktop/blob/master/.github/workflows/build_and_deploy.yaml
-# Changes:
-# - Edited inputs.
 
 name: Build and Deploy
 on:
@@ -61,6 +59,16 @@ on:
                     - none
     workflow_call:
         secrets:
+            APPLE_ID:
+                required: false
+            APPLE_ID_PASSWORD:
+                required: false
+            APPLE_TEAM_ID:
+                required: false
+            APPLE_CSC_KEY_PASSWORD:
+                required: false
+            APPLE_CSC_LINK:
+                required: false
             homeserver:
                 required: true
             update_folder:
@@ -137,6 +145,7 @@ jobs:
         uses: ./.github/workflows/build_macos.yaml
         secrets: inherit
         with:
+            #sign: true
             deploy-mode: true
             base-url: https://packages.element.io/${{ inputs.mode == 'release' && 'desktop' || 'nightly' }}
             element-version: ${{ inputs.element-version }}
