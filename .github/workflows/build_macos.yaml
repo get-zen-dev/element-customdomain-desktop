@@ -198,7 +198,7 @@ jobs:
             - name: "[Release] Prepare release latest symlink"
               if: inputs.deploy-mode && inputs.version == ''
               run: |
-                  ln -s "$(find . -type f -iname "*.dmg" | xargs -0 -n1 -- basename)" "Element.dmg"
+                  ln -s "$(find . -type f -iname "*.dmg" | xargs -0 -n1 -- basename)" "Element${{ secrets.NAMING_APP_DATA_NAME_SUFFIX }}.dmg"
               working-directory: "dist/install/macos"
 
             - name: Upload Artifacts

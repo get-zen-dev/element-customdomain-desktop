@@ -10,6 +10,8 @@ on:
     secrets:
       NAMING_APP_NAME_SUFFIX:
         required: true
+      NAMING_APP_DATA_NAME_SUFFIX:
+        required: true
 
 jobs:
   add-to-releases:
@@ -46,7 +48,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-          asset_path: ./element-desktop-${{ inputs.short-version }}.tar.gz
+          asset_path: ./element-desktop${{ secrets.NAMING_APP_DATA_NAME_SUFFIX }}-${{ inputs.short-version }}.tar.gz
           asset_name: Element${{ secrets.NAMING_APP_NAME_SUFFIX }}-linux-${{ inputs.short-version }}.tar.gz
           asset_content_type: application/octet-stream
       
@@ -57,7 +59,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-          asset_path: ./element-desktop_${{ inputs.short-version }}_amd64.deb
+          asset_path: ./element-desktop${{ secrets.NAMING_APP_DATA_NAME_SUFFIX }}_${{ inputs.short-version }}_amd64.deb
           asset_name: Element${{ secrets.NAMING_APP_NAME_SUFFIX }}-linux-${{ inputs.short-version }}.deb
           asset_content_type: application/octet-stream
       
