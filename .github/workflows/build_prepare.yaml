@@ -79,6 +79,9 @@ jobs:
                       sed -i 's#\"update_base_url\": \"https://packages.element.io/desktop/update/\",##g' myconfig/config.json;
                   fi
 
+                  sed -i 's#\"name\": \"element-desktop\"#\"name\": \"element-desktop-123\"#g' element-desktop/package.json
+                  sed -i 's#\"productName\": \"Element\"#\"productName\": \"Element 123\"#g' element-desktop/package.json
+
                   mv element-desktop/* ./
 
             - uses: actions/setup-node@v3

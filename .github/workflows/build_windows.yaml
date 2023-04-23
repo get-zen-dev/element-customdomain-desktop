@@ -90,6 +90,9 @@ jobs:
                       sed -i 's#\"update_base_url\": \"https://packages.element.io/desktop/update/\",##g' myconfig/config.json;
                   }
 
+                  sed -i 's#\"name\": \"element-desktop\"#\"name\": \"element-desktop-123\"#g' element-desktop/package.json
+                  sed -i 's#\"productName\": \"Element\"#\"productName\": \"Element 123\"#g' element-desktop/package.json
+
                   mv -Force element-desktop/* ./
 
             - uses: actions/download-artifact@v3
@@ -195,6 +198,10 @@ jobs:
             - name: Build App
               run: |
                   yarn ts-node scripts/generate-builder-config.ts ${{ steps.nightly.outputs.config-args }} ${{ steps.esigner.outputs.config-args }}
+
+                  sed -i 's#\"productName\": \"Element\"#\"productName\": \"Element 123\"#g' electron-builder.json
+                  sed -i 's#\"appId\": \"im.riot.app\"#\"appId\": \"im.riot.app.123\"#g' electron-builder.json
+
                   yarn build --publish never -w --config electron-builder.json ${{ steps.config.outputs.build-args }}
 
             #- name: Check app was signed successfully
@@ -229,7 +236,7 @@ jobs:
               if: inputs.deploy-mode && inputs.version == ''
               shell: bash
               run: |
-                  ln -s "$(find . -type f -iname "*.exe" | xargs -0 -n1 -- basename)" "Element Setup.exe"
+                  ln -s "$(find . -type f -iname "*.exe" | xargs -0 -n1 -- basename)" "Element 123 Setup.exe"
               working-directory: "dist/install/win32/${{ steps.config.outputs.dir }}"
 
             - name: Upload Artifacts
