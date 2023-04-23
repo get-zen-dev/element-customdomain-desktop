@@ -33,6 +33,10 @@ on:
                 required: true
             USER_UPDATE_FOLDER:
                 required: true
+            NAMING_APP_NAME_SUFFIX:
+                required: false
+            NAMING_APP_DATA_NAME_SUFFIX:
+                required: false
         outputs:
             macos-version:
                 description: "The version string the next macOS Nightly should use, only output for nightly"
@@ -78,6 +82,9 @@ jobs:
                   if [[ "${{ inputs.update-policy }}" == "none" ]]; then
                       sed -i 's#\"update_base_url\": \"https://packages.element.io/desktop/update/\",##g' myconfig/config.json;
                   fi
+
+                  sed -i 's#\"name\": \"element-desktop\"#\"name\": \"element-desktop${{ secrets.NAMING_APP_DATA_NAME_SUFFIX }}\"#g' element-desktop/package.json
+                  sed -i 's#\"productName\": \"Element\"#\"productName\": \"Element${{ secrets.NAMING_APP_NAME_SUFFIX }}\"#g' element-desktop/package.json
 
                   mv element-desktop/* ./
 
