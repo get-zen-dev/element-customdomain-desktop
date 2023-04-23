@@ -1,13 +1,13 @@
 on:
   workflow_call:
     secrets:
-      api:
+      API:
         required: true
-      access_key:
+      API_ACCESS_KEY:
         required: true
-      secret_key:
+      API_SECRET_KEY:
         required: true
-      bucket_name:
+      API_BUCKET_NAME:
         required: true
 
 jobs:
@@ -28,11 +28,11 @@ jobs:
           chmod +x $HOME/minio-binaries/mc
           export PATH=$PATH:$HOME/minio-binaries/
 
-          mc alias set wr "$API" "$ACCESS_KEY" "$SECRET_KEY"
-          mc cp --recursive packages.element.io/ wr/"$BUCKET_NAME"/
+          mc alias set wr "$API" "$API_ACCESS_KEY" "$API_SECRET_KEY"
+          mc cp --recursive packages.element.io/ wr/"$API_BUCKET_NAME"/
         env:
-          API: ${{ secrets.api }}
-          ACCESS_KEY: ${{ secrets.access_key }}
-          SECRET_KEY: ${{ secrets.secret_key }}
-          BUCKET_NAME: ${{ secrets.bucket_name }}
+          API: ${{ secrets.API }}
+          ACCESS_KEY: ${{ secrets.API_ACCESS_KEY }}
+          SECRET_KEY: ${{ secrets.API_SECRET_KEY }}
+          BUCKET_NAME: ${{ secrets.API_BUCKET_NAME }}
         name: Deploy

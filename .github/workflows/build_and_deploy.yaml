@@ -69,17 +69,17 @@ on:
                 required: false
             APPLE_CSC_LINK:
                 required: false
-            homeserver:
+            USER_HOMESERVER:
                 required: true
-            update_folder:
+            USER_UPDATE_FOLDER:
                 required: true
-            api:
+            API:
                 required: true
-            access_key:
+            API_ACCESS_KEY:
                 required: true
-            secret_key:
+            API_SECRET_KEY:
                 required: true
-            bucket_name:
+            API_BUCKET_NAME:
                 required: true
         inputs:
             mode:

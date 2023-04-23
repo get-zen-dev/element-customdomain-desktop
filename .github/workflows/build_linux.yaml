@@ -1,7 +1,4 @@
 # Original source: https://github.com/vector-im/element-desktop/blob/master/.github/workflows/build_linux.yaml
-# Changes: 
-# - Add myconfig, clone element & create config.
-# - Slightly edited inputs.
 
 # This workflow relies on actions/cache to store the hak dependency artifacts as they take a long time to build
 # Due to this extra care must be taken to only ever run all build_* scripts against the same branch to ensure
@@ -9,9 +6,9 @@
 on:
     workflow_call:
         secrets:
-            homeserver:
+            USER_HOMESERVER:
                 required: true
-            update_folder:
+            USER_UPDATE_FOLDER:
                 required: true
         inputs:
             config:
@@ -41,25 +38,25 @@ jobs:
 
             - name: Load Element & Create Config
               run: |
-                git clone https://github.com/vector-im/element-desktop.git
-                cd element-desktop
-                git checkout master
-                git checkout ${{ inputs.element-version }}
-                cd ..
+                  git clone https://github.com/vector-im/element-desktop.git
+                  cd element-desktop
+                  git checkout master
+                  git checkout ${{ inputs.element-version }}
+                  cd ..
 
-                mkdir myconfig
-                cp element-desktop/element.io/release/config.json myconfig/config.json
-                sed -i 's#\"default_server_name\": \"matrix.org\",#\"default_server_name\": \"${{ secrets.homeserver }}\",#g' myconfig/config.json
+                  mkdir myconfig
+                  cp element-desktop/element.io/release/config.json myconfig/config.json
+                  sed -i 's#\"default_server_name\": \"matrix.org\",#\"default_server_name\": \"${{ secrets.USER_HOMESERVER }}\",#g' myconfig/config.json
 
-                if [[ "${{ inputs.update-policy }}" == "custom" ]]; then
-                  sed -i 's#\"update_base_url\": \"https://packages.element.io/desktop/update/\",#\"update_base_url\": \"${{ secrets.update_folder }}\",#g' myconfig/config.json;
-                fi
+                  if [[ "${{ inputs.update-policy }}" == "custom" ]]; then
+                     sed -i 's#\"update_base_url\": \"https://packages.element.io/desktop/update/\",#\"update_base_url\": \"${{ secrets.USER_UPDATE_FOLDER }}\",#g' myconfig/config.json;
+                  fi
 
-                if [[ "${{ inputs.update-policy }}" == "none" ]]; then
-                  sed -i 's#\"update_base_url\": \"https://packages.element.io/desktop/update/\",##g' myconfig/config.json;
-                fi
-                
-                mv element-desktop/* ./
+                  if [[ "${{ inputs.update-policy }}" == "none" ]]; then
+                      sed -i 's#\"update_base_url\": \"https://packages.element.io/desktop/update/\",##g' myconfig/config.json;
+                  fi
+                  
+                  mv element-desktop/* ./
 
             - uses: actions/download-artifact@v3
               with:
