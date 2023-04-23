@@ -10,6 +10,12 @@ on:
                 required: true
             USER_UPDATE_FOLDER:
                 required: true
+            NAMING_APP_ID:
+                required: true
+            NAMING_APP_NAME_SUFFIX:
+                required: true
+            NAMING_APP_DATA_NAME_SUFFIX:
+                required: true
         inputs:
             config:
                 type: string
@@ -56,6 +62,9 @@ jobs:
                       sed -i 's#\"update_base_url\": \"https://packages.element.io/desktop/update/\",##g' myconfig/config.json;
                   fi
                   
+                  sed -i 's#\"name\": \"element-desktop\"#\"name\": \"element-desktop${{ secrets.NAMING_APP_DATA_NAME_SUFFIX }}\"#g' element-desktop/package.json
+                  sed -i 's#\"productName\": \"Element\"#\"productName\": \"Element${{ secrets.NAMING_APP_NAME_SUFFIX }}\"#g' element-desktop/package.json
+
                   mv element-desktop/* ./
 
             - uses: actions/download-artifact@v3
@@ -113,6 +122,10 @@ jobs:
             - name: Build App
               run: |
                   npx ts-node scripts/generate-builder-config.ts ${{ steps.nightly.outputs.config-args }} --deb-custom-control=debcontrol
+
+                  sed -i 's#\"productName\": \"Element\"#\"productName\": \"Element${{ secrets.NAMING_APP_NAME_SUFFIX }}\"#g' electron-builder.json
+                  sed -i 's#\"appId\": \"im.riot.app\"#\"appId\": \"${{ secrets.NAMING_APP_ID }}\"#g' electron-builder.json
+
                   yarn build --publish never -l --config electron-builder.json
 
             - name: Upload Artifacts

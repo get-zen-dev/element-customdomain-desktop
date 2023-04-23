@@ -44,11 +44,6 @@ on:
                 required: true
                 type: string
                 default: 1.11.28
-            naming:
-                description: Suffix of generated files that shows that Element is built with custom home server
-                required: true
-                type: string
-                default: custom-hs
             update-policy:
                 required: true
                 default: custom
@@ -81,6 +76,12 @@ on:
                 required: true
             API_BUCKET_NAME:
                 required: true
+            NAMING_APP_ID:
+                required: true
+            NAMING_APP_NAME_SUFFIX:
+                required: true
+            NAMING_APP_DATA_NAME_SUFFIX:
+                required: true
         inputs:
             mode:
                 type: string
@@ -95,8 +96,6 @@ on:
             element-version:
                 type: string
             short-version:
-                type: string
-            naming:
                 type: string
             update-policy:
                 type: string
@@ -167,10 +166,10 @@ jobs:
         permissions: write-all
         needs: [prepare, linux, windows_32bit, windows_64bit, macos]
         uses: ./.github/workflows/add_to_releases.yaml
+        secrets: inherit
         with:
             element-version: ${{ inputs.element-version }}
             short-version: ${{ inputs.short-version }}
-            naming: ${{ inputs.naming }}
     
     deploy:
         permissions: write-all
