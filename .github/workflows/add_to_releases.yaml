@@ -9,9 +9,9 @@ on:
         type: string
     secrets:
       NAMING_APP_NAME_SUFFIX:
-        required: true
+        required: false
       NAMING_APP_DATA_NAME_SUFFIX:
-        required: true
+        required: false
 
 jobs:
   add-to-releases:

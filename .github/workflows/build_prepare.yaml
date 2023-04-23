@@ -34,9 +34,9 @@ on:
             USER_UPDATE_FOLDER:
                 required: true
             NAMING_APP_NAME_SUFFIX:
-                required: true
+                required: false
             NAMING_APP_DATA_NAME_SUFFIX:
-                required: true
+                required: false
         outputs:
             macos-version:
                 description: "The version string the next macOS Nightly should use, only output for nightly"

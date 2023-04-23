@@ -19,9 +19,9 @@ on:
             NAMING_APP_ID:
                 required: true
             NAMING_APP_NAME_SUFFIX:
-                required: true
+                required: false
             NAMING_APP_DATA_NAME_SUFFIX:
-                required: true
+                required: false
         inputs:
             arch:
                 type: string

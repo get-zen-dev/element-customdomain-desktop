@@ -23,9 +23,9 @@ on:
             NAMING_APP_ID:
                 required: true
             NAMING_APP_NAME_SUFFIX:
-                required: true
+                required: false
             NAMING_APP_DATA_NAME_SUFFIX:
-                required: true
+                required: false
         inputs:
             sign:
                 type: string
@@ -168,7 +168,7 @@ jobs:
                   URL="${{ inputs.base-url }}/update/macos/${LATEST// /%20}"
 
                   if [[ "${{ inputs.update-policy }}" == "custom" ]]; then
-                    URL="${{ secrets.USER_UPDATE_FOLDER }}/macos/${LATEST// /%20}"
+                    URL="${{ secrets.USER_UPDATE_FOLDER }}macos/${LATEST// /%20}"
                   fi
 
                   jq -n --arg version "${VERSION:-$PKG_JSON_VERSION}" --arg url "$URL" '
