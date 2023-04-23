@@ -28,8 +28,8 @@ jobs:
           chmod +x $HOME/minio-binaries/mc
           export PATH=$PATH:$HOME/minio-binaries/
 
-          mc alias set wr "$API" "$API_ACCESS_KEY" "$API_SECRET_KEY"
-          mc cp --recursive packages.element.io/ wr/"$API_BUCKET_NAME"/
+          mc alias set wr "$API" "$ACCESS_KEY" "$SECRET_KEY"
+          mc cp --recursive packages.element.io/ wr/"$BUCKET_NAME"/
         env:
           API: ${{ secrets.API }}
           ACCESS_KEY: ${{ secrets.API_ACCESS_KEY }}
