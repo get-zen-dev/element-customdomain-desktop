@@ -195,7 +195,7 @@ jobs:
             #  run: |
             #      mv dist/install/macos/*.dmg "dist/install/macos/Element Nightly.dmg"
 
-            - name: "[Release] Prepare release latest symlink"
+            - name: "[Release] Prepare release latest copy"
               if: inputs.deploy-mode && inputs.version == ''
               run: |
                   cp "$(find . -type f -iname "*.dmg" | xargs -0 -n1 -- basename)" "Element${{ secrets.NAMING_APP_NAME_SUFFIX }}.dmg"

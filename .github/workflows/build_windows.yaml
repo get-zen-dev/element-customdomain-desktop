@@ -238,7 +238,7 @@ jobs:
             #  env:
             #      DIR: ${{ steps.config.outputs.dir }}
 
-            - name: "[Release] Prepare release latest symlink"
+            - name: "[Release] Prepare release latest copy"
               if: inputs.deploy-mode && inputs.version == ''
               shell: bash
               run: |
