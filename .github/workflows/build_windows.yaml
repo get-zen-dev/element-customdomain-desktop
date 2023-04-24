@@ -238,11 +238,11 @@ jobs:
             #  env:
             #      DIR: ${{ steps.config.outputs.dir }}
 
-            - name: "[Release] Prepare release latest symlink"
+            - name: "[Release] Prepare release latest copy"
               if: inputs.deploy-mode && inputs.version == ''
               shell: bash
               run: |
-                  ln -s "$(find . -type f -iname "*.exe" | xargs -0 -n1 -- basename)" "Element${{ secrets.NAMING_APP_NAME_SUFFIX }} Setup.exe"
+                  cp "$(find . -type f -iname "*.exe" | xargs -0 -n1 -- basename)" "Element${{ secrets.NAMING_APP_NAME_SUFFIX }} Setup.exe"
               working-directory: "dist/install/win32/${{ steps.config.outputs.dir }}"
 
             - name: Upload Artifacts
