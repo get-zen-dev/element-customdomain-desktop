@@ -167,8 +167,10 @@ jobs:
                   # Encode spaces in the URL as Squirrel.Mac complains about bad JSON otherwise
                   URL="${{ inputs.base-url }}/update/macos/${LATEST// /%20}"
 
+                  # Same for interpunct
                   if [[ "${{ inputs.update-policy }}" == "custom" ]]; then
-                      URL="${{ secrets.USER_UPDATE_FOLDER }}macos/${LATEST// /%20}"
+                      LATEST1=${LATEST// /%20}
+                      URL="${{ secrets.USER_UPDATE_FOLDER }}macos/${LATEST2//·/%C2%B7}"
                   fi
 
                   jq -n --arg version "${VERSION:-$PKG_JSON_VERSION}" --arg url "$URL" '
