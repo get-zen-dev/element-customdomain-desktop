@@ -115,6 +115,8 @@ jobs:
                   cp "$DIR/control.template" debcontrol
                   VERSION=${INPUT_VERSION:-$(cat package.json | jq -r .version)}
                   echo "Version: ${VERSION:1}" >> debcontrol
+
+                  sed -i 's#Package: element-desktop#Package: element-desktop${{ secrets.NAMING_APP_DATA_NAME_SUFFIX }}#g' debcontrol
               env:
                   DIR: ${{ inputs.config }}
                   INPUT_VERSION: ${{ inputs.element-version }}
