@@ -47,7 +47,7 @@ jobs:
             [Download this for 32-bit Windows]($LINK_WIN32_CURRENT)
             "
         env:
-          GH_TOKEN: ${{ GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         name: Generate Links
 
 
