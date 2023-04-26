@@ -15,6 +15,7 @@ jobs:
     permissions: write-all
 
     steps:
+      - uses: actions/checkout@v3
       - run: |
           LINK_MACOS_LATEST="${{ secrets.API }}/${{ secrets.API_BUCKET_NAME }}/install/macos/Element${{ secrets.NAMING_APP_NAME_SUFFIX }}.dmg"
           LINK_WIN64_LATEST="${{ secrets.API }}/${{ secrets.API_BUCKET_NAME }}/install/win32/x64/Element${{ secrets.NAMING_APP_NAME_SUFFIX }} Setup.exe"
