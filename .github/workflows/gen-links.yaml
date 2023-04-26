@@ -25,19 +25,19 @@ jobs:
           LINK_WIN64_CURRENT="${{ secrets.API }}/${{ secrets.API_BUCKET_NAME }}/install/win32/x64/Element${{ secrets.NAMING_APP_NAME_SUFFIX }} Setup ${{ inputs.short-version }}.exe"
           LINK_WIN32_CURRENT="${{ secrets.API }}/${{ secrets.API_BUCKET_NAME }}/install/win32/ia32/Element${{ secrets.NAMING_APP_NAME_SUFFIX }} Setup ${{ inputs.short-version }}.exe"
 
-          LINK_MACOS_LATEST=${LINK_MACOS_LATEST// /%20}
-          LINK_WIN64_LATEST=${LINK_WIN64_LATEST// /%20}
-          LINK_WIN32_LATEST=${LINK_WIN32_LATEST// /%20}
-          LINK_MACOS_CURRENT=${LINK_MACOS_CURRENT// /%20}
-          LINK_WIN64_CURRENT=${LINK_WIN64_CURRENT// /%20}
-          LINK_WIN32_CURRENT=${LINK_WIN32_CURRENT// /%20}
+          LINK_MACOS_LATEST="${LINK_MACOS_LATEST// /%20}"
+          LINK_WIN64_LATEST="${LINK_WIN64_LATEST// /%20}"
+          LINK_WIN32_LATEST="${LINK_WIN32_LATEST// /%20}"
+          LINK_MACOS_CURRENT="${LINK_MACOS_CURRENT// /%20}"
+          LINK_WIN64_CURRENT="${LINK_WIN64_CURRENT// /%20}"
+          LINK_WIN32_CURRENT="${LINK_WIN32_CURRENT// /%20}"
 
-          LINK_MACOS_LATEST=${LINK_MACOS_LATEST//·/%C2%B7}
-          LINK_WIN64_LATEST=${LINK_WIN64_LATEST//·/%C2%B7}
-          LINK_WIN32_LATEST=${LINK_WIN32_LATEST//·/%C2%B7}
-          LINK_MACOS_CURRENT=${LINK_MACOS_CURRENT//·/%C2%B7}
-          LINK_WIN64_CURRENT=${LINK_WIN64_CURRENT//·/%C2%B7}
-          LINK_WIN32_CURRENT=${LINK_WIN32_CURRENT//·/%C2%B7}
+          LINK_MACOS_LATEST="${LINK_MACOS_LATEST//·/%C2%B7}"
+          LINK_WIN64_LATEST="${LINK_WIN64_LATEST//·/%C2%B7}"
+          LINK_WIN32_LATEST="${LINK_WIN32_LATEST//·/%C2%B7}"
+          LINK_MACOS_CURRENT="${LINK_MACOS_CURRENT//·/%C2%B7}"
+          LINK_WIN64_CURRENT="${LINK_WIN64_CURRENT//·/%C2%B7}"
+          LINK_WIN32_CURRENT="${LINK_WIN32_CURRENT//·/%C2%B7}"
 
           gh release edit v${{ inputs.short-version }} --notes "[Download the latest version for Mac]($LINK_MACOS_LATEST)
             [Download the latest version for 64-bit Windows]($LINK_WIN64_LATEST)
