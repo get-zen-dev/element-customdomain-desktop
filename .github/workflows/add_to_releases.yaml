@@ -34,7 +34,6 @@ jobs:
           gh release create ${{ inputs.element-version }}
           gh release upload ${{ inputs.element-version }} 'element-desktop${{ secrets.NAMING_APP_DATA_NAME_SUFFIX }}-${{ inputs.short-version }}.tar.gz#Element${{ secrets.NAMING_APP_NAME_SUFFIX }}-linux-${{ inputs.short-version }}.tar.gz'
           gh release upload ${{ inputs.element-version }} 'element-desktop${{ secrets.NAMING_APP_DATA_NAME_SUFFIX }}_${{ inputs.short-version }}_amd64.deb#Element${{ secrets.NAMING_APP_NAME_SUFFIX }}-linux-${{ inputs.short-version }}.deb'
-          gh release upload ${{ inputs.element-version }} 'install/win32/ia32/Element${{ secrets.NAMING_APP_NAME_SUFFIX }} Setup ${{ inputs.short-version }}.exe#Element${{ secrets.NAMING_APP_NAME_SUFFIX }}-win32-Setup-${{ inputs.short-version }}.exe'
           gh release upload ${{ inputs.element-version }} 'install/win32/x64/Element${{ secrets.NAMING_APP_NAME_SUFFIX }} Setup ${{ inputs.short-version }}.exe#Element${{ secrets.NAMING_APP_NAME_SUFFIX }}-win64-Setup-${{ inputs.short-version }}.exe'
           gh release upload ${{ inputs.element-version }} 'install/macos/Element${{ secrets.NAMING_APP_NAME_SUFFIX }}-${{ inputs.short-version }}-universal.dmg#Element${{ secrets.NAMING_APP_NAME_SUFFIX }}-macos-Setup-${{ inputs.short-version }}.dmg'
         env:
