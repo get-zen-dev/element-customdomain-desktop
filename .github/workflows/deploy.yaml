@@ -29,8 +29,6 @@ jobs:
         with:
             path: linux-sqlcipher-system
             name: linux-sqlcipher-system
-      
-      - run: ls -R
 
       - run: |
           curl https://dl.min.io/client/mc/release/linux-amd64/mc --create-dirs -o $HOME/minio-binaries/mc
@@ -38,10 +36,10 @@ jobs:
           chmod +x $HOME/minio-binaries/mc
           export PATH=$PATH:$HOME/minio-binaries/
 
-          mc alias set wr "$API" "$ACCESS_KEY" "$SECRET_KEY" --quiet
-          mc cp --recursive packages.element.io/ wr/"$BUCKET_NAME"/ --quiet
-          mc cp linux-sqlcipher-system/element-desktop"$SUFFIX"_"$VERSION"_amd64.deb wr/"$BUCKET_NAME"/install/linux/element-desktop"$SUFFIX"_"$VERSION"_amd64.deb
-          mc cp linux-sqlcipher-system/element-desktop"$SUFFIX"_"$VERSION"_amd64.deb wr/"$BUCKET_NAME"/install/linux/element-desktop"$SUFFIX"_amd64.deb
+          mc alias set wr "$API" "$ACCESS_KEY" "$SECRET_KEY"
+          mc cp --quiet --recursive packages.element.io/ wr/"$BUCKET_NAME"/
+          mc cp --quiet linux-sqlcipher-system/element-desktop"$SUFFIX"_"$VERSION"_amd64.deb wr/"$BUCKET_NAME"/install/linux/element-desktop"$SUFFIX"_"$VERSION"_amd64.deb
+          mc cp --quiet linux-sqlcipher-system/element-desktop"$SUFFIX"_"$VERSION"_amd64.deb wr/"$BUCKET_NAME"/install/linux/element-desktop"$SUFFIX"_amd64.deb
         env:
           API: ${{ secrets.API }}
           ACCESS_KEY: ${{ secrets.API_ACCESS_KEY }}
