@@ -21,77 +21,20 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
             name: linux-sqlcipher-system
+
       - uses: actions/download-artifact@v3
         with:
             name: packages.element.io
 
       - run: ls -R
 
-      # https://github.com/actions/upload-release-asset
-
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
+      - run: |
+          gh release create ${{ inputs.element-version }}
+          gh release upload ${{ inputs.element-version }} './element-desktop${{ secrets.NAMING_APP_DATA_NAME_SUFFIX }}-${{ inputs.short-version }}.tar.gz#Element${{ secrets.NAMING_APP_NAME_SUFFIX }}-linux-${{ inputs.short-version }}.tar.gz'
+          gh release upload ${{ inputs.element-version }} './element-desktop${{ secrets.NAMING_APP_DATA_NAME_SUFFIX }}_${{ inputs.short-version }}_amd64.deb#Element${{ secrets.NAMING_APP_NAME_SUFFIX }}-linux-${{ inputs.short-version }}.deb'
+          gh release upload ${{ inputs.element-version }} './install/win32/ia32/Element${{ secrets.NAMING_APP_NAME_SUFFIX }} Setup ${{ inputs.short-version }}.exe#Element${{ secrets.NAMING_APP_NAME_SUFFIX }}-win32-Setup-${{ inputs.short-version }}.exe'
+          gh release upload ${{ inputs.element-version }} './install/win32/x64/Element${{ secrets.NAMING_APP_NAME_SUFFIX }} Setup ${{ inputs.short-version }}.exe#Element${{ secrets.NAMING_APP_NAME_SUFFIX }}-win64-Setup-${{ inputs.short-version }}.exe'
+          gh release upload ${{ inputs.element-version }} './install/macos/Element${{ secrets.NAMING_APP_NAME_SUFFIX }}-${{ inputs.short-version }}-universal.dmg#Element${{ secrets.NAMING_APP_NAME_SUFFIX }}-macos-Setup-${{ inputs.short-version }}.dmg'
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ inputs.element-version }}
-          release_name: Release Element${{ secrets.NAMING_APP_NAME_SUFFIX }}-${{ inputs.short-version }}
-          draft: false
-          prerelease: false
-
-
-      - name: Upload Release Asset (Linux Tar)
-        id: upload-release-asset-linux-tar
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-          asset_path: ./element-desktop${{ secrets.NAMING_APP_DATA_NAME_SUFFIX }}-${{ inputs.short-version }}.tar.gz
-          asset_name: Element${{ secrets.NAMING_APP_NAME_SUFFIX }}-linux-${{ inputs.short-version }}.tar.gz
-          asset_content_type: application/octet-stream
-      
-      - name: Upload Release Asset (Linux Deb)
-        id: upload-release-asset-linux-debian
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-          asset_path: ./element-desktop${{ secrets.NAMING_APP_DATA_NAME_SUFFIX }}_${{ inputs.short-version }}_amd64.deb
-          asset_name: Element${{ secrets.NAMING_APP_NAME_SUFFIX }}-linux-${{ inputs.short-version }}.deb
-          asset_content_type: application/octet-stream
-      
-      - name: Upload Release Asset (Windows32)
-        id: upload-release-asset-windows32
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-          asset_path: ./install/win32/ia32/Element${{ secrets.NAMING_APP_NAME_SUFFIX }} Setup ${{ inputs.short-version }}.exe
-          asset_name: Element${{ secrets.NAMING_APP_NAME_SUFFIX }}-win32-Setup-${{ inputs.short-version }}.exe
-          asset_content_type: application/octet-stream
-
-      - name: Upload Release Asset (Windows64)
-        id: upload-release-asset-windows64
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-          asset_path: ./install/win32/x64/Element${{ secrets.NAMING_APP_NAME_SUFFIX }} Setup ${{ inputs.short-version }}.exe
-          asset_name: Element${{ secrets.NAMING_APP_NAME_SUFFIX }}-win64-Setup-${{ inputs.short-version }}.exe
-          asset_content_type: application/octet-stream
-
-      - name: Upload Release Asset (Macos)
-        id: upload-release-asset-macos
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-          asset_path: ./install/macos/Element${{ secrets.NAMING_APP_NAME_SUFFIX }}-${{ inputs.short-version }}-universal.dmg
-          asset_name: Element${{ secrets.NAMING_APP_NAME_SUFFIX }}-macos-Setup-${{ inputs.short-version }}.dmg
-          asset_content_type: application/octet-stream
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        name: Create Release
