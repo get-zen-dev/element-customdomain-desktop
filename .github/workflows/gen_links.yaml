@@ -44,12 +44,12 @@ jobs:
           gh release edit v${{ inputs.short-version }} --notes "[Download the latest version for Mac]($LINK_MACOS_LATEST)
             [Download the latest version for 64-bit Windows]($LINK_WIN64_LATEST)
             [Download the latest version for 32-bit Windows]($LINK_WIN32_LATEST)
-            [Download the latest version for linux]($LINK_LINUX_LATEST)
+            [Download the latest version for Linux]($LINK_LINUX_LATEST)
 
             [Download this version for Mac]($LINK_MACOS_CURRENT)
             [Download this version for 64-bit Windows]($LINK_WIN64_CURRENT)
             [Download this version for 32-bit Windows]($LINK_WIN32_CURRENT)
-            [Download this version for linux]($LINK_LINUX_CURRENT)
+            [Download this version for Linux]($LINK_LINUX_CURRENT)
             "
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
