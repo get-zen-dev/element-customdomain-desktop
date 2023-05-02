@@ -9,6 +9,8 @@ on:
         required: true
       API_BUCKET_NAME:
         required: true
+      NAMING_APP_DATA_NAME_SUFFIX:
+        required: false
 
 jobs:
   deploy:
@@ -19,6 +21,11 @@ jobs:
         with:
             path: packages.element.io
             name: packages.element.io
+
+      - uses: actions/download-artifact@v3
+        with:
+            path: linux-sqlcipher-system
+            name: linux-sqlcipher-system
       
       - run: ls -R
 
@@ -28,11 +35,15 @@ jobs:
           chmod +x $HOME/minio-binaries/mc
           export PATH=$PATH:$HOME/minio-binaries/
 
-          mc alias set wr "$API" "$ACCESS_KEY" "$SECRET_KEY"
-          mc cp --recursive packages.element.io/ wr/"$BUCKET_NAME"/
+          mc alias set wr "$API" "$ACCESS_KEY" "$SECRET_KEY" --quiet
+          mc cp --recursive packages.element.io/ wr/"$BUCKET_NAME"/ --quiet
+          mc cp linux-sqlcipher-system/element-desktop"$SUFFIX"_"$VERSION"_amd64.deb wr/"$BUCKET_NAME"/install/linux/element-desktop"$SUFFIX"_"$VERSION"_amd64.deb
+          mc cp linux-sqlcipher-system/element-desktop"$SUFFIX"_"$VERSION"_amd64.deb wr/"$BUCKET_NAME"/install/linux/element-desktop"$SUFFIX"_amd64.deb
         env:
           API: ${{ secrets.API }}
           ACCESS_KEY: ${{ secrets.API_ACCESS_KEY }}
           SECRET_KEY: ${{ secrets.API_SECRET_KEY }}
           BUCKET_NAME: ${{ secrets.API_BUCKET_NAME }}
+          SUFFIX: ${{ secrets.NAMING_APP_DATA_NAME_SUFFIX }}
+          VERSION: ${{ inputs.short-version }}
         name: Deploy

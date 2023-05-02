@@ -28,6 +28,8 @@ jobs:
 
       - run: ls -R
 
+      - uses: actions/checkout@v3
+
       - run: |
           gh release create ${{ inputs.element-version }}
           gh release upload ${{ inputs.element-version }} './element-desktop${{ secrets.NAMING_APP_DATA_NAME_SUFFIX }}-${{ inputs.short-version }}.tar.gz#Element${{ secrets.NAMING_APP_NAME_SUFFIX }}-linux-${{ inputs.short-version }}.tar.gz'
