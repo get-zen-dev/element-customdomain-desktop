@@ -11,6 +11,9 @@ on:
         required: true
       NAMING_APP_DATA_NAME_SUFFIX:
         required: false
+    inputs:
+      short-version:
+        type: string
 
 jobs:
   deploy:

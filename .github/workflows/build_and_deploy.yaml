@@ -176,3 +176,5 @@ jobs:
         needs: [prepare, linux, windows_32bit, windows_64bit, macos]
         uses: ./.github/workflows/deploy.yaml
         secrets: inherit
+        with:
+            short-version: ${{ inputs.short-version }}
