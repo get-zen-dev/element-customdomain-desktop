@@ -3,13 +3,11 @@ name: Check New Versions
 on:
   workflow_dispatch:
     inputs:
-      days:
+      always-build:
         required: true
-        type: choice
-        options:
-          - '1'
-          - '365'
-        default: '1'
+        type: boolean
+        default: true
+        description: `Build the latest version anyway'
   schedule:
     - cron: "0 2 * * *"
 
@@ -29,8 +27,8 @@ jobs:
           cd element-desktop
 
           usince=$(date -Iminutes -d "1 day ago 20 minutes ago")
-          if [[ "${{ inputs.days }}" == "365" ]]; then
-            usince=$(date -Iminutes -d "365 days ago");
+          if [[ "${{ inputs.always-build }}" == "true" ]]; then
+            usince="2023-01-01T00:00+00:00";
           fi
           
           echo $usince
