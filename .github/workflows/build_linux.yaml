@@ -132,7 +132,7 @@ jobs:
                   mv electron-builder.json electon-builder.json.original
                   jq '.productName = "Element${{ secrets.NAMING_APP_NAME_SUFFIX }}"
                     | .appId = "${{ secrets.NAMING_APP_ID }}"
-                    ' > electron-builder.json
+                    ' electron-builder.json.original > electron-builder.json
 
                   yarn build --publish never -l --config electron-builder.json
 

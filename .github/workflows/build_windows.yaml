@@ -81,8 +81,8 @@ jobs:
                   git checkout master
                   git checkout ${{ inputs.element-version }}
                   cd ..
-                  
-                  CONFIG_PATH="element-desktop/element.io/release/config.json"
+
+                  $CONFIG_PATH="element-desktop/element.io/release/config.json"
 
                   mkdir myconfig
                   if ( "${{ inputs.update-policy }}" -eq "custom" )
@@ -212,7 +212,7 @@ jobs:
                   mv electron-builder.json electon-builder.json.original
                   jq '.productName = "Element${{ secrets.NAMING_APP_NAME_SUFFIX }}"
                     | .appId = "${{ secrets.NAMING_APP_ID }}"
-                    ' > electron-builder.json
+                    ' electron-builder.json.original > electron-builder.json
 
                   yarn build --publish never -w --config electron-builder.json ${{ steps.config.outputs.build-args }}
 
