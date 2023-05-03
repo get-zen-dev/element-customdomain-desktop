@@ -87,16 +87,16 @@ jobs:
                   mkdir myconfig
                   if ( "${{ inputs.update-policy }}" -eq "custom" )
                   {
-                      jq '.default_server_name = "${{ secrets.USER_HOMESERVER }}" | .update_base_url = "${{ secrets.USER_UPDATE_FOLDER }}"' $CONFIG_PATH > myconfig/config.json;
+                      jq '.default_server_name = \"${{ secrets.USER_HOMESERVER }}\" | .update_base_url = \"${{ secrets.USER_UPDATE_FOLDER }}\"' $CONFIG_PATH > myconfig/config.json;
                       mv element-desktop/package.json element-desktop/package.json.original;
-                      jq '.name = "element-desktop${{ secrets.NAMING_APP_DATA_NAME_SUFFIX }}" | .productName = "Element${{ secrets.NAMING_APP_NAME_SUFFIX }}"' element-desktop/package.json.original > element-desktop/package.json;
+                      jq '.name = \"element-desktop${{ secrets.NAMING_APP_DATA_NAME_SUFFIX }}\" | .productName = \"Element${{ secrets.NAMING_APP_NAME_SUFFIX }}\"' element-desktop/package.json.original > element-desktop/package.json;
                   }
 
                   if ( "${{ inputs.update-policy }}" -eq "none" )
                   {
-                      jq '.default_server_name = "${{ secrets.USER_HOMESERVER }}" | .update_base_url = ""' $CONFIG_PATH > myconfig/config.json;
+                      jq '.default_server_name = \"${{ secrets.USER_HOMESERVER }}\" | .update_base_url = \"\"' $CONFIG_PATH > myconfig/config.json;
                       mv element-desktop/package.json element-desktop/package.json.original;
-                      jq '.name = "element-desktop${{ secrets.NAMING_APP_DATA_NAME_SUFFIX }}" | .productName = "Element${{ secrets.NAMING_APP_NAME_SUFFIX }}"' element-desktop/package.json.original > element-desktop/package.json;
+                      jq '.name = \"element-desktop${{ secrets.NAMING_APP_DATA_NAME_SUFFIX }}\" | .productName = \"Element${{ secrets.NAMING_APP_NAME_SUFFIX }}\"' element-desktop/package.json.original > element-desktop/package.json;
                   }
 
                   mv -Force element-desktop/* ./
