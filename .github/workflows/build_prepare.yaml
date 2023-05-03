@@ -90,7 +90,7 @@ jobs:
                         ' $CONFIG_PATH > myconfig/config.json;
                   fi
 
-                  cat myconfig.json
+                  cat myconfig/config.json
 
                   mv element-desktop/* ./
 
