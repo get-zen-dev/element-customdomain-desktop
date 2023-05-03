@@ -60,20 +60,24 @@ jobs:
                   git checkout ${{ inputs.element-version }}
                   cd ..
 
-                  mkdir myconfig
-                  cp element-desktop/element.io/release/config.json myconfig/config.json
-                  sed -i".original" 's#\"default_server_name\": \"matrix.org\",#\"default_server_name\": \"${{ secrets.USER_HOMESERVER }}\",#g' myconfig/config.json
+                  CONFIG_PATH="element-desktop/element.io/release/config.json"
 
+                  mkdir myconfig
                   if [[ "${{ inputs.update-policy }}" == "custom" ]]; then
-                      sed -i".original" 's#\"update_base_url\": \"https://packages.element.io/desktop/update/\",#\"update_base_url\": \"${{ secrets.USER_UPDATE_FOLDER }}\",#g' myconfig/config.json;
+                      jq '.default_server_name = "${{ secrets.USER_HOMESERVER }}"
+                        | .update_base_url = "${{ secrets.USER_UPDATE_FOLDER }}"
+                        | .name = "element-desktop${{ secrets.NAMING_APP_DATA_NAME_SUFFIX }}"
+                        | .productName = "Element${{ secrets.NAMING_APP_NAME_SUFFIX }}"
+                        ' $CONFIG_PATH > myconfig/config.json;
                   fi
 
                   if [[ "${{ inputs.update-policy }}" == "none" ]]; then
-                      sed -i".original" 's#\"update_base_url\": \"https://packages.element.io/desktop/update/\",##g' myconfig/config.json;
+                      jq '.default_server_name = "${{ secrets.USER_HOMESERVER }}"
+                        | .update_base_url = ""
+                        | .name = "element-desktop${{ secrets.NAMING_APP_DATA_NAME_SUFFIX }}"
+                        | .productName = "Element${{ secrets.NAMING_APP_NAME_SUFFIX }}"
+                        ' $CONFIG_PATH > myconfig/config.json;
                   fi
-
-                  sed -i".original" 's#\"name\": \"element-desktop\"#\"name\": \"element-desktop${{ secrets.NAMING_APP_DATA_NAME_SUFFIX }}\"#g' element-desktop/package.json
-                  sed -i".original" 's#\"productName\": \"Element\"#\"productName\": \"Element${{ secrets.NAMING_APP_NAME_SUFFIX }}\"#g' element-desktop/package.json
 
                   mv element-desktop/* ./
 
@@ -124,8 +128,10 @@ jobs:
               run: |
                   scripts/generate-builder-config.ts ${{ steps.nightly.outputs.config-args }} --notarytool-team-id='${{ secrets.APPLE_TEAM_ID }}'
 
-                  sed -i".original" 's#\"productName\": \"Element\"#\"productName\": \"Element${{ secrets.NAMING_APP_NAME_SUFFIX }}\"#g' electron-builder.json
-                  sed -i".original" 's#\"appId\": \"im.riot.app\"#\"appId\": \"${{ secrets.NAMING_APP_ID }}\"#g' electron-builder.json
+                  mv electron-builder.json electron-builder.json.original
+                  jq '.productName = "Element${{ secrets.NAMING_APP_NAME_SUFFIX }}"
+                    | .appId = "${{ secrets.NAMING_APP_ID }}"
+                    ' electron-builder.json.original > electron-builder.json
 
                   yarn build:universal --publish never --config electron-builder.json
               env:
@@ -147,8 +153,10 @@ jobs:
               run: |
                   scripts/generate-builder-config.ts ${{ steps.nightly.outputs.config-args }}
 
-                  sed -i".original" 's#\"productName\": \"Element\"#\"productName\": \"Element${{ secrets.NAMING_APP_NAME_SUFFIX }}\"#g' electron-builder.json
-                  sed -i".original" 's#\"appId\": \"im.riot.app\"#\"appId\": \"${{ secrets.NAMING_APP_ID }}\"#g' electron-builder.json
+                  mv electron-builder.json electron-builder.json.original
+                  jq '.productName = "Element${{ secrets.NAMING_APP_NAME_SUFFIX }}"
+                    | .appId = "${{ secrets.NAMING_APP_ID }}"
+                    ' > electron-builder.json
 
                   yarn build:universal --publish never --config electron-builder.json
               env:
