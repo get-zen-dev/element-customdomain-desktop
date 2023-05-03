@@ -51,21 +51,21 @@ jobs:
                   cd ..
 
                   CONFIG_PATH="element-desktop/element.io/release/config.json"
-                  
+
                   mkdir myconfig
                   if [[ "${{ inputs.update-policy }}" == "custom" ]]; then
-                      jq '.default_server_name = "${{ secrets.USER_HOMESERVER }}" \
-                        | .update_base_url = "${{ secrets.USER_UPDATE_FOLDER }}" \
-                        | .name = "element-desktop${{ secrets.NAMING_APP_DATA_NAME_SUFFIX }}" \
-                        | .productName = "Element${{ secrets.NAMING_APP_NAME_SUFFIX }}" \
+                      jq '.default_server_name = "${{ secrets.USER_HOMESERVER }}"
+                        | .update_base_url = "${{ secrets.USER_UPDATE_FOLDER }}"
+                        | .name = "element-desktop${{ secrets.NAMING_APP_DATA_NAME_SUFFIX }}"
+                        | .productName = "Element${{ secrets.NAMING_APP_NAME_SUFFIX }}"
                         ' $CONFIG_PATH > myconfig/config.json;
                   fi
 
                   if [[ "${{ inputs.update-policy }}" == "none" ]]; then
-                      jq '.default_server_name = "${{ secrets.USER_HOMESERVER }}" \
-                        | .update_base_url = "" \
-                        | .name = "element-desktop${{ secrets.NAMING_APP_DATA_NAME_SUFFIX }}" \
-                        | .productName = "Element${{ secrets.NAMING_APP_NAME_SUFFIX }}" \
+                      jq '.default_server_name = "${{ secrets.USER_HOMESERVER }}"
+                        | .update_base_url = ""
+                        | .name = "element-desktop${{ secrets.NAMING_APP_DATA_NAME_SUFFIX }}"
+                        | .productName = "Element${{ secrets.NAMING_APP_NAME_SUFFIX }}"
                         ' $CONFIG_PATH > myconfig/config.json;
                   fi
 
@@ -130,8 +130,8 @@ jobs:
                   npx ts-node scripts/generate-builder-config.ts ${{ steps.nightly.outputs.config-args }} --deb-custom-control=debcontrol
 
                   mv electron-builder.json electon-builder.json.original
-                  jq '.productName = "Element${{ secrets.NAMING_APP_NAME_SUFFIX }}" \
-                    | .appId = "${{ secrets.NAMING_APP_ID }}" \
+                  jq '.productName = "Element${{ secrets.NAMING_APP_NAME_SUFFIX }}"
+                    | .appId = "${{ secrets.NAMING_APP_ID }}"
                     ' > electron-builder.json
 
                   yarn build --publish never -l --config electron-builder.json
