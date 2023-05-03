@@ -180,9 +180,9 @@ jobs:
                   # We will replace all special symbols in updater name with '-'
                   if [[ "${{ inputs.update-policy }}" == "custom" ]]; then
                       LATEST1=${LATEST// /-}
-                      LATEST1=${LATEST//·/-}
-                      LATEST1=${LATEST//(/-}
-                      LATEST1=${LATEST//)/-}
+                      LATEST1=${LATEST1//·/-}
+                      LATEST1=${LATEST1//(/-}
+                      LATEST1=${LATEST1//)/-}
                       URL="${{ secrets.USER_UPDATE_FOLDER }}macos/LATEST1"
                       mv dist/update/macos/$LATEST dist/update/macos/$LATEST1
                   fi
