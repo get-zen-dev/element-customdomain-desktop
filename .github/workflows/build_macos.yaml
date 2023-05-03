@@ -184,7 +184,7 @@ jobs:
                       LATEST1=${LATEST//(/-}
                       LATEST1=${LATEST//)/-}
                       URL="${{ secrets.USER_UPDATE_FOLDER }}macos/LATEST1"
-                      mv dist/update/macos/LATEST dist/update/macos/LATEST1
+                      mv dist/update/macos/$LATEST dist/update/macos/$LATEST1
                   fi
 
                   jq -n --arg version "${VERSION:-$PKG_JSON_VERSION}" --arg url "$URL" '
