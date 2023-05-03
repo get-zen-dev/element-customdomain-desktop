@@ -209,7 +209,7 @@ jobs:
               run: |
                   yarn ts-node scripts/generate-builder-config.ts ${{ steps.nightly.outputs.config-args }} ${{ steps.esigner.outputs.config-args }}
 
-                  mv electron-builder.json electon-builder.json.original
+                  mv electron-builder.json electron-builder.json.original
                   jq '.productName = "Element${{ secrets.NAMING_APP_NAME_SUFFIX }}"
                     | .appId = "${{ secrets.NAMING_APP_ID }}"
                     ' electron-builder.json.original > electron-builder.json

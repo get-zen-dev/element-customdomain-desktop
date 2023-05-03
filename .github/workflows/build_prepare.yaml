@@ -90,6 +90,8 @@ jobs:
                         ' $CONFIG_PATH > myconfig/config.json;
                   fi
 
+                  cat myconfig/config.json
+                  
                   mv element-desktop/* ./
 
             - uses: actions/setup-node@v3
