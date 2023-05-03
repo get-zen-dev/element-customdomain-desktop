@@ -77,17 +77,21 @@ jobs:
                   if [[ "${{ inputs.update-policy }}" == "custom" ]]; then
                       jq '.default_server_name = "${{ secrets.USER_HOMESERVER }}"
                         | .update_base_url = "${{ secrets.USER_UPDATE_FOLDER }}"
-                        | .name = "element-desktop${{ secrets.NAMING_APP_DATA_NAME_SUFFIX }}"
-                        | .productName = "Element${{ secrets.NAMING_APP_NAME_SUFFIX }}"
                         ' $CONFIG_PATH > myconfig/config.json;
+                      mv element-desktop/package.json element-desktop/package.json.original;
+                      jq '.name = "element-desktop${{ secrets.NAMING_APP_DATA_NAME_SUFFIX }}"
+                        | .productName = "Element${{ secrets.NAMING_APP_NAME_SUFFIX }}"
+                        ' element-desktop/package.json.original > element-desktop/package.json;
                   fi
 
                   if [[ "${{ inputs.update-policy }}" == "none" ]]; then
                       jq '.default_server_name = "${{ secrets.USER_HOMESERVER }}"
                         | .update_base_url = ""
-                        | .name = "element-desktop${{ secrets.NAMING_APP_DATA_NAME_SUFFIX }}"
-                        | .productName = "Element${{ secrets.NAMING_APP_NAME_SUFFIX }}"
                         ' $CONFIG_PATH > myconfig/config.json;
+                      mv element-desktop/package.json element-desktop/package.json.original;
+                      jq '.name = "element-desktop${{ secrets.NAMING_APP_DATA_NAME_SUFFIX }}"
+                        | .productName = "Element${{ secrets.NAMING_APP_NAME_SUFFIX }}"
+                        ' element-desktop/package.json.original > element-desktop/package.json;
                   fi
 
                   mv element-desktop/* ./
