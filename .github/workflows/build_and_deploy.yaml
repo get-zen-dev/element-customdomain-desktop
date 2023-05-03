@@ -50,7 +50,6 @@ on:
                 type: choice
                 options:
                     - custom
-                    - original
                     - none
     workflow_call:
         secrets:
