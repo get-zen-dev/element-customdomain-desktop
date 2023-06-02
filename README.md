@@ -1,7 +1,5 @@
 # chs-element-desktop
 
-This repo builds mirror of [Element Desktop](https://github.com/vector-im/element-desktop) with custom home server.
-
 ## Description
 
 This repository builds a mirror of [Element Desktop](https://github.com/vector-im/element-desktop) with default homeserver different from [matrix.org](https://matrix.org).
