@@ -45,8 +45,8 @@ jobs:
           # Now we are using exoscale
           sudo apt install s3cmd
           echo "[default]\
-            host_base = sos-$ZONE.exo.io\
-            host_bucket = %(bucket)s.sos-$ZONE.exo.io\
+            host_base = $API\
+            host_bucket = %(bucket)s.$API\
             access_key = $ACCESS_KEY\
             secret_key = $SECRET_KEY\
             use_https = True
@@ -63,7 +63,6 @@ jobs:
           ACCESS_KEY: ${{ secrets.API_ACCESS_KEY }}
           SECRET_KEY: ${{ secrets.API_SECRET_KEY }}
           BUCKET_NAME: ${{ secrets.API_BUCKET_NAME }}
-          ZONE: "de-fra-1"
           SUFFIX: ${{ secrets.NAMING_APP_DATA_NAME_SUFFIX }}
           VERSION: ${{ inputs.short-version }}
         name: Deploy

@@ -17,29 +17,29 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: |
-          LINK_MACOS_LATEST="${{ secrets.API }}/${{ secrets.API_BUCKET_NAME }}/install/macos/Element${{ secrets.NAMING_APP_NAME_SUFFIX }}.dmg"
-          LINK_WIN64_LATEST="${{ secrets.API }}/${{ secrets.API_BUCKET_NAME }}/install/win32/x64/Element${{ secrets.NAMING_APP_NAME_SUFFIX }} Setup.exe"
-          LINK_WIN32_LATEST="${{ secrets.API }}/${{ secrets.API_BUCKET_NAME }}/install/win32/ia32/Element${{ secrets.NAMING_APP_NAME_SUFFIX }} Setup.exe"
-          LINK_LINUX_LATEST="${{ secrets.API }}/${{ secrets.API_BUCKET_NAME }}/install/linux/element-desktop${{ secrets.NAMING_APP_DATA_NAME_SUFFIX }}_amd64.deb"
+          LINK_MACOS_LATEST="https://${{ secrets.API }}/${{ secrets.API_BUCKET_NAME }}/install/macos/Element${{ secrets.NAMING_APP_NAME_SUFFIX }}.dmg"
+          LINK_WIN64_LATEST="https://${{ secrets.API }}/${{ secrets.API_BUCKET_NAME }}/install/win32/x64/Element${{ secrets.NAMING_APP_NAME_SUFFIX }} Setup.exe"
+          LINK_WIN32_LATEST="https://${{ secrets.API }}/${{ secrets.API_BUCKET_NAME }}/install/win32/ia32/Element${{ secrets.NAMING_APP_NAME_SUFFIX }} Setup.exe"
+          LINK_LINUX_LATEST="https://${{ secrets.API }}/${{ secrets.API_BUCKET_NAME }}/install/linux/element-desktop${{ secrets.NAMING_APP_DATA_NAME_SUFFIX }}_amd64.deb"
 
-          LINK_MACOS_CURRENT="${{ secrets.API }}/${{ secrets.API_BUCKET_NAME }}/install/macos/Element${{ secrets.NAMING_APP_NAME_SUFFIX }}-${{ inputs.short-version }}-universal.dmg"
-          LINK_WIN64_CURRENT="${{ secrets.API }}/${{ secrets.API_BUCKET_NAME }}/install/win32/x64/Element${{ secrets.NAMING_APP_NAME_SUFFIX }} Setup ${{ inputs.short-version }}.exe"
-          LINK_WIN32_CURRENT="${{ secrets.API }}/${{ secrets.API_BUCKET_NAME }}/install/win32/ia32/Element${{ secrets.NAMING_APP_NAME_SUFFIX }} Setup ${{ inputs.short-version }}.exe"
-          LINK_LINUX_CURRENT="${{ secrets.API }}/${{ secrets.API_BUCKET_NAME }}/install/linux/element-desktop${{ secrets.NAMING_APP_DATA_NAME_SUFFIX }}_${{ inputs.short-version }}_amd64.deb"
+          LINK_MACOS_CURRENT="https://${{ secrets.API }}/${{ secrets.API_BUCKET_NAME }}/install/macos/Element${{ secrets.NAMING_APP_NAME_SUFFIX }}-${{ inputs.short-version }}-universal.dmg"
+          LINK_WIN64_CURRENT="https://${{ secrets.API }}/${{ secrets.API_BUCKET_NAME }}/install/win32/x64/Element${{ secrets.NAMING_APP_NAME_SUFFIX }} Setup ${{ inputs.short-version }}.exe"
+          LINK_WIN32_CURRENT="https://${{ secrets.API }}/${{ secrets.API_BUCKET_NAME }}/install/win32/ia32/Element${{ secrets.NAMING_APP_NAME_SUFFIX }} Setup ${{ inputs.short-version }}.exe"
+          LINK_LINUX_CURRENT="https://${{ secrets.API }}/${{ secrets.API_BUCKET_NAME }}/install/linux/element-desktop${{ secrets.NAMING_APP_DATA_NAME_SUFFIX }}_${{ inputs.short-version }}_amd64.deb"
 
-          LINK_MACOS_LATEST="${LINK_MACOS_LATEST// /%20}"
-          LINK_WIN64_LATEST="${LINK_WIN64_LATEST// /%20}"
-          LINK_WIN32_LATEST="${LINK_WIN32_LATEST// /%20}"
-          LINK_MACOS_CURRENT="${LINK_MACOS_CURRENT// /%20}"
-          LINK_WIN64_CURRENT="${LINK_WIN64_CURRENT// /%20}"
-          LINK_WIN32_CURRENT="${LINK_WIN32_CURRENT// /%20}"
+          LINK_MACOS_LATEST="https://${LINK_MACOS_LATEST// /%20}"
+          LINK_WIN64_LATEST="https://${LINK_WIN64_LATEST// /%20}"
+          LINK_WIN32_LATEST="https://${LINK_WIN32_LATEST// /%20}"
+          LINK_MACOS_CURRENT="https://${LINK_MACOS_CURRENT// /%20}"
+          LINK_WIN64_CURRENT="https://${LINK_WIN64_CURRENT// /%20}"
+          LINK_WIN32_CURRENT="https://${LINK_WIN32_CURRENT// /%20}"
 
-          LINK_MACOS_LATEST="${LINK_MACOS_LATEST//·/%C2%B7}"
-          LINK_WIN64_LATEST="${LINK_WIN64_LATEST//·/%C2%B7}"
-          LINK_WIN32_LATEST="${LINK_WIN32_LATEST//·/%C2%B7}"
-          LINK_MACOS_CURRENT="${LINK_MACOS_CURRENT//·/%C2%B7}"
-          LINK_WIN64_CURRENT="${LINK_WIN64_CURRENT//·/%C2%B7}"
-          LINK_WIN32_CURRENT="${LINK_WIN32_CURRENT//·/%C2%B7}"
+          LINK_MACOS_LATEST="https://${LINK_MACOS_LATEST//·/%C2%B7}"
+          LINK_WIN64_LATEST="https://${LINK_WIN64_LATEST//·/%C2%B7}"
+          LINK_WIN32_LATEST="https://${LINK_WIN32_LATEST//·/%C2%B7}"
+          LINK_MACOS_CURRENT="https://${LINK_MACOS_CURRENT//·/%C2%B7}"
+          LINK_WIN64_CURRENT="https://${LINK_WIN64_CURRENT//·/%C2%B7}"
+          LINK_WIN32_CURRENT="https://${LINK_WIN32_CURRENT//·/%C2%B7}"
 
           gh release edit v${{ inputs.short-version }} --notes "[Download the latest version for Mac]($LINK_MACOS_LATEST)
             [Download the latest version for 64-bit Windows]($LINK_WIN64_LATEST)
