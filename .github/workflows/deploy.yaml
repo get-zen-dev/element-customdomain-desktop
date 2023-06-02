@@ -48,8 +48,10 @@ jobs:
             host_bucket = %(bucket)s.$API\
             access_key = $ACCESS_KEY\
             secret_key = $SECRET_KEY\
-            use_https = True
+            use_https = True\
             " > /home/runner/.s3cfg
+          
+          cat /home/runner/.s3cfg
           
           sudo apt install s3cmd
 
