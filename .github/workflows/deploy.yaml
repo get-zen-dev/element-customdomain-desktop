@@ -31,20 +31,39 @@ jobs:
             name: linux-sqlcipher-system
 
       - run: |
-          curl https://dl.min.io/client/mc/release/linux-amd64/mc --create-dirs -o $HOME/minio-binaries/mc
+          # Was used when we used min.io
+          # curl https://dl.min.io/client/mc/release/linux-amd64/mc --create-dirs -o $HOME/minio-binaries/mc
 
-          chmod +x $HOME/minio-binaries/mc
-          export PATH=$PATH:$HOME/minio-binaries/
+          # chmod +x $HOME/minio-binaries/mc
+          # export PATH=$PATH:$HOME/minio-binaries/
 
-          mc alias set wr "$API" "$ACCESS_KEY" "$SECRET_KEY"
-          mc cp --quiet --recursive packages.element.io/ wr/"$BUCKET_NAME"/
-          mc cp --quiet linux-sqlcipher-system/element-desktop"$SUFFIX"_"$VERSION"_amd64.deb wr/"$BUCKET_NAME"/install/linux/element-desktop"$SUFFIX"_"$VERSION"_amd64.deb
-          mc cp --quiet linux-sqlcipher-system/element-desktop"$SUFFIX"_"$VERSION"_amd64.deb wr/"$BUCKET_NAME"/install/linux/element-desktop"$SUFFIX"_amd64.deb
+          # mc alias set wr "$API" "$ACCESS_KEY" "$SECRET_KEY"
+          # mc cp --quiet --recursive packages.element.io/ wr/"$BUCKET_NAME"/
+          # mc cp --quiet linux-sqlcipher-system/element-desktop"$SUFFIX"_"$VERSION"_amd64.deb wr/"$BUCKET_NAME"/install/linux/element-desktop"$SUFFIX"_"$VERSION"_amd64.deb
+          # mc cp --quiet linux-sqlcipher-system/element-desktop"$SUFFIX"_"$VERSION"_amd64.deb wr/"$BUCKET_NAME"/install/linux/element-desktop"$SUFFIX"_amd64.deb
+
+          # Now we are using exoscale
+          sudo apt install s3cmd
+          echo "[default]\
+            host_base = sos-$ZONE.exo.io\
+            host_bucket = %(bucket)s.sos-$ZONE.exo.io\
+            access_key = $ACCESS_KEY\
+            secret_key = $SECRET_KEY\
+            use_https = True
+            " > .s3cfg
+          
+          s3cmd -r put packages.element.io/ s3://"$BUCKET_NAME"
+          s3cmd -r put linux-sqlcipher-system/element-desktop"$SUFFIX"_"$VERSION"_amd64.deb s3://"$BUCKET_NAME"/install/linux/element-desktop"$SUFFIX"_"$VERSION"_amd64.deb
+          s3cmd -r put linux-sqlcipher-system/element-desktop"$SUFFIX"_"$VERSION"_amd64.deb s3://"$BUCKET_NAME"/install/linux/element-desktop"$SUFFIX"_amd64.deb
+
+          s3cmd -r setacl --acl-public s3://"$BUCKET_NAME"/install
+          s3cmd -r setacl --acl-public s3://"$BUCKET_NAME"/update
         env:
           API: ${{ secrets.API }}
           ACCESS_KEY: ${{ secrets.API_ACCESS_KEY }}
           SECRET_KEY: ${{ secrets.API_SECRET_KEY }}
           BUCKET_NAME: ${{ secrets.API_BUCKET_NAME }}
+          ZONE: "de-fra-1"
           SUFFIX: ${{ secrets.NAMING_APP_DATA_NAME_SUFFIX }}
           VERSION: ${{ inputs.short-version }}
         name: Deploy
