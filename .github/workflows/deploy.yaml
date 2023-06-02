@@ -50,7 +50,7 @@ jobs:
             access_key = $ACCESS_KEY\
             secret_key = $SECRET_KEY\
             use_https = True
-            " > .s3cfg
+            " > /home/runner/.s3cfg
           
           s3cmd -r put packages.element.io/ s3://"$BUCKET_NAME"
           s3cmd -r put linux-sqlcipher-system/element-desktop"$SUFFIX"_"$VERSION"_amd64.deb s3://"$BUCKET_NAME"/install/linux/element-desktop"$SUFFIX"_"$VERSION"_amd64.deb
