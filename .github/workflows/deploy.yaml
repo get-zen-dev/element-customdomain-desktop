@@ -43,7 +43,6 @@ jobs:
           # mc cp --quiet linux-sqlcipher-system/element-desktop"$SUFFIX"_"$VERSION"_amd64.deb wr/"$BUCKET_NAME"/install/linux/element-desktop"$SUFFIX"_amd64.deb
 
           # Now we are using exoscale
-          sudo apt install s3cmd
           echo "[default]\
             host_base = $API\
             host_bucket = %(bucket)s.$API\
@@ -52,6 +51,8 @@ jobs:
             use_https = True
             " > /home/runner/.s3cfg
           
+          sudo apt install s3cmd
+
           s3cmd -r put packages.element.io/ s3://"$BUCKET_NAME"
           s3cmd -r put linux-sqlcipher-system/element-desktop"$SUFFIX"_"$VERSION"_amd64.deb s3://"$BUCKET_NAME"/install/linux/element-desktop"$SUFFIX"_"$VERSION"_amd64.deb
           s3cmd -r put linux-sqlcipher-system/element-desktop"$SUFFIX"_"$VERSION"_amd64.deb s3://"$BUCKET_NAME"/install/linux/element-desktop"$SUFFIX"_amd64.deb
