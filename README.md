@@ -34,8 +34,8 @@ Both these secrets will be visible to users.
 These are access and secret key for account with write access on your storage.
 
 ### Secrets, part 3 (naming).
-7. `NAMING_APP_NAME_SUFFIX`.
-8. `NAMING_APP_DATA_NAME_SUFFIX`.
+7. `NAMING_APP_NAME_SUFFIX`
+8. `NAMING_APP_DATA_NAME_SUFFIX`
 
 These are used in naming part. `NAMING_APP_NAME_SUFFIX` is user-visible, `NAMING_APP_DATA_NAME_SUFFIX` is more system-related. Your version of Element will be called `Element${NAMING_APP_NAME_SUFFIX}`.
 
@@ -55,19 +55,34 @@ Signing is required for autoupdates on macOS. Also it makes it easier to enter t
 14. `NAMING_APP_ID` - CFBundleIdentifier of your app.
 
 These all are required to sign your app.
-`APPLE_ID` and `APPLE_ID_PASSWORD` are obvious ones. You can find `APPLE_TEAM_ID` in your Developer account.
+
+`APPLE_ID` and `APPLE_ID_PASSWORD` are your Apple ID and your App Specific Password for App Store Connect.
+
+`APPLE_TEAM_ID` is your Developer Team ID. You can find it [here](https://developer.apple.com/account/).
 
 [Open this link](https://developer.apple.com/account/resources/identifiers/list) to register `NAMING_APP_ID`. Click on plus near `Identifiers` and follow instructions after it. `NAMING_APP_ID` is used for builds on other platforms, too.
 
-To create and export Developer ID Certificate follow these instructions on Mac:
-- First, create certificate according to [this instruction](https://developer.apple.com/help/account/create-certificates/create-developer-id-certificates). Do not forget to install the certificate in your keychain by double-clicking on it.
-- Then export your certificate to `.p12` format as in [this instruction](https://ioscodesigning.com/exporting-code-signing-files/#exporting-manually). Set secure password in the step 5.
+To get values of the other secrets, follow these steps ([src1](https://developer.apple.com/help/account/create-certificates/create-developer-id-certificates), [src2](https://ioscodesigning.com/exporting-code-signing-files/#exporting-manually)):
 
-You can use your Developer ID Certificate for multiple apps so you don't have to create a new one if you already have it.
-
-Set secret `APPLE_CSC_LINK` as the result of running command `base64 -i PathToYourCertificate`, where `PathToYourCertificate` is path to your Developer ID Certificate in `.p12` format. Set secret `APPLE_CSC_KEY_PASSWORD` as the password you set in the step 5 of the second of instructions above.
-
-[More detailed signing instruction in Russian.](https://docs.google.com/document/d/1eHp5cwMbsJO5Hs500iqqBsoovCRjJYtElzw0MAGHKjQ/edit?usp=sharing)
+1. [Open this link](https://developer.apple.com/account/resources/certificates/list)
+2. Click the plus near "Certificates"
+3. Select "Developer ID Certificate", press "Continue"
+4. Open Keychain Access on your Mac
+5. Select "Keychain Access" - "Certificate Assistant" - "Request a Certificate from a Certificate Authority"
+6. Enter your email and choose key name, leave the last field empty
+7. Click "Saved to disk", "Continue"
+8. Load the just generated code signing request in the browser (the page opened after step 3)
+9. Click "Continue"
+10. Download the ".cer" certificate on your device
+11. Click on it twice to import it to your Keychain
+12. Enter "Keychain Access", select "login" on the left and category "My Certificates"
+13. Find your new certificate, click on it and select "Export"
+14. Select format ".p12"
+15. Create a name and a password for your certificate in ".p12" format (password shouldn't be empty)
+16. Export your certificate in ".p12" format
+17. Run "base64 -w 0 path/to/your/certificate_in.p12" in terminal
+18. Set secret `APPLE_CSC_LINK` (in your copy of this repository) as the output of the previous step
+19. Set secret `APPLE_CSC_KEY_PASSWORD` as the password you created in step 15
 
 ## Build
 
